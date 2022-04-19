@@ -1,0 +1,34 @@
+<div class="d-flex flex-row">
+    <div class="sidenav vh-100 p-3 bg-dark text-white">
+        <div class="d-flex flex-column h-100">
+            <div class="mb-auto">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="mr-auto">
+                        <img class="sidenav-image" src="assets/favicon-light.png">
+                    </div>
+                    <div class="fs-4">
+                        Quotes App
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <hr>
+            <div>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="assets/dev-profile.jpeg" alt="" width="32" height="32"
+                            class="rounded-circle me-2">
+                        <strong>Settings</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                        <li (click)="logout()"><button class="dropdown-item btn btn-link"><i class="bi bi-box-arrow-left me-2"></i>Logout</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="w-100 p-4 content">
+        <router-outlet></router-outlet>
+    </div>
+</div>
