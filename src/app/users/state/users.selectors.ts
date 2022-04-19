@@ -6,3 +6,7 @@ const userState = createFeatureSelector<UserState>('user');
 export const loggedUser = createSelector(userState, (state) => {
     return state.loggedUser;
 });
+
+export const accessToken = createSelector(userState, (state) => {
+    return state.accessToken;
+});

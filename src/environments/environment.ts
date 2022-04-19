@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
+  apiUrl: 'http://localhost:3000/api',
   users: 'http://localhost:3000/api/users',
+  categories: 'http://localhost:3000/api/categories',
 };
 
 /*

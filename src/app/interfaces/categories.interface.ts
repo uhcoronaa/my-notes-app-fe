@@ -1,8 +1,6 @@
 export interface Category {
-    id: number;
+    _id: string;
     name: string;
     description: string;
-    priority: string;
-    status: string;
     image?: string;
 }

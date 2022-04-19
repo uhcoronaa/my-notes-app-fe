@@ -1,0 +1,7 @@
+<my-notes-app-category-form *ngIf="editCategory"
+    [formType]="'edit'"
+    [category]="editCategory"
+    (cancelEvent)="cancel($event)"
+    (saveEvent)="edit($event)"
+>
+</my-notes-app-category-form>

@@ -1,0 +1,47 @@
+<div class="fs-2 mb-4" *ngIf="formType==='create'">
+    New Category
+</div>
+
+<div class="fs-2 mb-4" *ngIf="formType==='edit'">
+    Edit Category
+</div>
+
+<div class="card p-4">
+    <form [formGroup]="form">
+        <div class="row mb-4">
+            <div class="col-12 mb-3">
+                <div class="input-group">
+                    <span class="input-group-text label-width">Name *</span>
+                    <input type="text" class="form-control" placeholder="Name" formControlName="name" [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched">
+                </div>
+                <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="text-danger mt-1 error-size">
+                    Please fill the required field
+                </div>
+            </div>
+            <div class="col-12 mb-3">
+                <div class="input-group">
+                    <span class="input-group-text label-width">Description *</span>
+                    <input type="text" class="form-control" placeholder="Description" formControlName="description" [class.is-invalid]="form.get('description')?.invalid && form.get('description')?.touched">
+                </div>
+                <div *ngIf="form.get('description')?.invalid && form.get('description')?.touched" class="text-danger mt-1 error-size">
+                    Please fill the required field
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="d-flex flex-row align-items-center">
+                    <div>
+                        <label for="formFile" class="form-label me-4">Profile Picture</label>
+                    </div>
+                    <div class="flex-fill">
+                        <input class="form-control" type="file" id="formFile" (change)="handleImageChange($event)">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="d-flex flex-row-reverse mt-4">
+    <button type="button" class="btn btn-primary ms-3" (click)="save()">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="cancel()">Cancel</button>
+</div>

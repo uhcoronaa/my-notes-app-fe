@@ -1,0 +1,33 @@
+<div class="d-flex flex-row align-items-center mb-3">
+    <div class="fs-2 me-auto">
+        Categories
+    </div>
+    <div>
+        <button type="button" class="btn btn-outline-primary" (click)="newCategory()">Add Category <i
+                class="bi bi-plus-square ms-2"></i></button>
+    </div>
+</div>
+
+<div class="card mb-3 p-4" *ngFor="let category of categoriesObservable | async">
+    <div class="d-flex flex-row align-items-center">
+        <div class="me-5">
+            <img [src]="category.image" alt="" width="90" height="90" class="rounded-circle me-2" loadImgError="assets/default-category-image.jpeg">
+        </div>
+        <div class="me-auto">
+            <div>
+                <b>Category Name: </b> {{category.name}}
+            </div>
+            <div>
+                <b>Description: </b>{{category.description}}
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-link text-decoration-none text-primary me-5" (click)="editCategory(category._id)">
+                <i class="bi bi-pencil me-2"></i> Edit
+            </button>
+            <button class="btn btn-link text-decoration-none text-danger me-4" (click)="deleteCategory(category._id)">
+                <i class="bi bi-trash me-2"></i> Delete
+            </button>
+        </div>
+    </div>
+</div>
