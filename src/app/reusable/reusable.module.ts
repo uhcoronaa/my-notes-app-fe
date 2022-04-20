@@ -2,19 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoryFormComponent } from './category-form/category-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NoteFormComponent } from './note-form/note-form.component';
 
 
 
 @NgModule({
   declarations: [
-    CategoryFormComponent
+    CategoryFormComponent,
+    NoteFormComponent
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
-    CategoryFormComponent
+    CategoryFormComponent,
+    NoteFormComponent
   ]
 })
 export class ReusableModule { }

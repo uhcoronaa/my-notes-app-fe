@@ -1,0 +1,5 @@
+<my-notes-app-note-form *ngIf="categories"
+    [categories]="categories"
+    (saveEvent)="saveNote($event)"
+    (cancelEvent)="cancel($event)"
+></my-notes-app-note-form>

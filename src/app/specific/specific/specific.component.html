@@ -13,6 +13,12 @@
                 <hr>
                 <ul class="nav nav-pills flex-column mt-3">
                     <li>
+                        <a [routerLink]="['notes']" [routerLinkActive]="'active'" class="nav-link text-white">
+                            <i class="bi bi-card-text me-2"></i>
+                            Notes
+                        </a>
+                    </li>
+                    <li>
                         <a [routerLink]="['categories']" [routerLinkActive]="'active'" class="nav-link text-white">
                             <i class="bi bi-tag me-2"></i>
                             Categories
@@ -36,7 +42,7 @@
             </div>
         </div>
     </div>
-    <div class="w-100 p-4 content">
+    <div class="vh-100 w-100 p-4 content">
         <router-outlet></router-outlet>
     </div>
 </div>

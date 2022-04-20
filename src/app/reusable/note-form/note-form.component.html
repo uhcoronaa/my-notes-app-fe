@@ -1,0 +1,71 @@
+<div class="fs-2 mb-4" *ngIf="formType==='create'">
+    New Note
+</div>
+
+<div class="fs-2 mb-4" *ngIf="formType==='edit'">
+    Edit Note
+</div>
+
+<div class="card p-4">
+    <form [formGroup]="form">
+        <div class="row mb-4">
+            <div class="col-6 mb-3">
+                <div class="input-group">
+                    <span class="input-group-text label-width">Name *</span>
+                    <input type="text" class="form-control" placeholder="Name" formControlName="name" [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched">
+                </div>
+                <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="text-danger mt-1 error-size">
+                    Please fill the required field
+                </div>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="input-group">
+                    <span class="input-group-text label-width">Category *</span>
+                    <select class="form-select" aria-label="Default select example" formControlName="category" [class.is-invalid]="form.get('category')?.invalid && form.get('category')?.touched">
+                        <option *ngFor="let category of categories" [value]="category.name">{{category.name}}</option>
+                      </select>
+                </div>
+                <div *ngIf="form.get('category')?.invalid && form.get('category')?.touched" class="text-danger mt-1 error-size">
+                    Please fill the required field
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="d-flex flex-row align-items-center">
+                    <div>
+                        <label for="formFile" class="form-label me-4">Category Picture</label>
+                    </div>
+                    <div class="flex-fill">
+                        <input class="form-control" type="file" id="formFile" (change)="handleImageChange($event)" data-buttonText="Your label here.">
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="input-group">
+                    <span class="input-group-text label-width">Status *</span>
+                    <select class="form-select" aria-label="Default select example" formControlName="status" [class.is-invalid]="form.get('status')?.invalid && form.get('status')?.touched">
+                        <option value="TO_DO">To Do</option>
+                        <option value="2">In Progress</option>
+                        <option value="3">Done</option>
+                      </select>
+                </div>
+                <div *ngIf="form.get('status')?.invalid && form.get('status')?.touched" class="text-danger mt-1 error-size">
+                    Please fill the required field
+                </div>
+            </div>
+            <div class="col-12 mb-3">
+                <div class="input-group">
+                    <span class="input-group-text label-width">Description *</span>
+                    <textarea rows="5" class="form-control" placeholder="Description" formControlName="description" [class.is-invalid]="form.get('description')?.invalid && form.get('description')?.touched"></textarea>
+                </div>
+                <div *ngIf="form.get('description')?.invalid && form.get('description')?.touched" class="text-danger mt-1 error-size">
+                    Please fill the required field
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="d-flex flex-row-reverse mt-4">
+    <button type="button" class="btn btn-primary ms-3" (click)="save()">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="cancel()">Cancel</button>
+</div>
