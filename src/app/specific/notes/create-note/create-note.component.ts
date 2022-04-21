@@ -4,6 +4,8 @@ import { Store } from '@ngrx/store';
 import { Category } from 'src/app/interfaces/categories.interface';
 import { Note } from 'src/app/interfaces/note.interface';
 import { CategoriesService } from 'src/app/services/categories.service';
+import { NotesService as NotesService } from 'src/app/services/notes.service';
+import * as notesActions from '../state/notes.actions';
 
 @Component({
   selector: 'my-notes-app-create-note',
@@ -14,7 +16,7 @@ export class CreateNoteComponent implements OnInit {
 
   categories: Category[] | null = null;
 
-  constructor(private categoriesService: CategoriesService, private store: Store, private router: Router) { }
+  constructor(private categoriesService: CategoriesService, private notesService: NotesService, private store: Store, private router: Router) { }
 
   ngOnInit(): void {
     this.categoriesService.fetchCategories()
@@ -23,11 +25,11 @@ export class CreateNoteComponent implements OnInit {
       });
   }
 
-  saveNote(category: Partial<Note>) {
-    // this.categoriesService.saveCategory(category).subscribe((category) => {
-    //   this.store.dispatch(categoriesActions.addCategory({ category }));
-    //   this.router.navigate(['specific', 'categories']);
-    // })
+  saveNote(note: Partial<Note>) {
+    this.notesService.saveNote(note).subscribe((note) => {
+      this.store.dispatch(notesActions.addNote({ note }));
+      this.router.navigate(['specific', 'notes']);
+    })
   }
 
   cancel(status: boolean) {

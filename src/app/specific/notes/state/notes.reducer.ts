@@ -17,7 +17,7 @@ const deleteNoteReducer = (state: NotesState, action: any) => {
     notes.splice(deletedIndex, 1);
     return {
         ...state,
-        categoriesList: notes
+        notesList: notes
     }
 }
 

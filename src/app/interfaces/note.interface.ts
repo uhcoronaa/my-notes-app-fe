@@ -5,4 +5,5 @@ export interface Note {
     image?: string;
     category: string;
     status: string;
+    order: number;
 }

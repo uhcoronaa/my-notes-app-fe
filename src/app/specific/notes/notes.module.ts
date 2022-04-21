@@ -7,11 +7,13 @@ import { ReusableModule } from 'src/app/reusable/reusable.module';
 import { StoreModule } from '@ngrx/store';
 import { notesReducer } from './state/notes.reducer';
 import { NotesComponent } from './notes/notes.component';
+import { EditNoteComponent } from './edit-note/edit-note.component';
 
 @NgModule({
   declarations: [
     CreateNoteComponent,
-    NotesComponent
+    NotesComponent,
+    EditNoteComponent
   ],
   imports: [
     CommonModule,
