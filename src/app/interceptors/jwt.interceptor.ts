@@ -5,7 +5,7 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { concatMap, Observable } from 'rxjs';
+import { concatMap, Observable, take } from 'rxjs';
 import * as userSelectors from '../users/state/users.selectors';
 import { Store } from '@ngrx/store';
 import { environment } from 'src/environments/environment';
@@ -19,6 +19,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
     return this.store.select(userSelectors.accessToken)
       .pipe(
+        take(1),
         concatMap(accessToken => {
           if (accessToken && request.url.startsWith(environment.apiUrl)) {
             request = request.clone({

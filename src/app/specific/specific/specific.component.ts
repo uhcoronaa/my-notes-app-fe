@@ -1,18 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { Note } from 'src/app/interfaces/note.interface';
+import { NotesService } from 'src/app/services/notes.service';
 import * as userActions from '../../users/state/users.actions';
+import * as sortNotesActions from '../sort-notes/state/sort-notes.actions';
+import * as sortNotesSelectors from '../sort-notes/state/sort-notes.selectors';
 
 @Component({
   selector: 'my-notes-app-specific',
   templateUrl: './specific.component.html',
   styleUrls: ['./specific.component.css']
 })
-export class SpecificComponent implements OnInit {
+export class SpecificComponent implements OnInit, OnDestroy {
 
-  constructor(private store: Store, private router: Router) { }
+  todoNotesObservable = this.store.select(sortNotesSelectors.todoNotes);
+  inProgressNotesObservable = this.store.select(sortNotesSelectors.inProgressNotes);
+  doneNotesObservable = this.store.select(sortNotesSelectors.doneNotes);
+  subscriptions: Subscription[] = [];
+
+  constructor(private store: Store, private router: Router, private notesService: NotesService) { }
 
   ngOnInit(): void {
+    this.subscriptions.push(this.notesService.fetchNotes()
+      .subscribe((notes: Note[]) => {
+        const todoNotes = notes.filter((n)=>n.status === 'TO_DO').length;
+        const inProgressNotes = notes.filter((n)=>n.status === 'IN_PROGRESS').length;
+        const doneNotes = notes.filter((n)=>n.status === 'DONE').length;
+        this.store.dispatch(sortNotesActions.updateTodoNotes({ todoNotes }));
+        this.store.dispatch(sortNotesActions.updateInProgressNotes({ inProgressNotes }));
+        this.store.dispatch(sortNotesActions.updateDoneNotes({ doneNotes }));
+      }));
   }
 
   logout(): void {
@@ -23,6 +42,12 @@ export class SpecificComponent implements OnInit {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     this.router.navigate(['']);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((s)=>{
+      s.unsubscribe();
+    })
   }
 
 }

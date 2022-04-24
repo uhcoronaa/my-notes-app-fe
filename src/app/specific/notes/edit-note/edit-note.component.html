@@ -1,4 +1,4 @@
-<my-notes-app-note-form *ngIf="categories"
+<my-notes-app-note-form *ngIf="categories && editNote"
     [formType]="'edit'"
     [categories]="categories"
     [note]="editNote"

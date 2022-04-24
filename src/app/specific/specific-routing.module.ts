@@ -11,11 +11,15 @@ const routes: Routes = [
     children: [
       {
         path: 'categories',
-        loadChildren: () => import('./categories/categories.module').then((m) => m.CategoriesModule)
+        loadChildren: () => import('./categories/categories.module').then((m) => m.CategoriesModule),
       },
       {
         path: 'notes',
         loadChildren: () => import('./notes/notes.module').then((m) => m.NotesModule)
+      },
+      {
+        path: 'sort-notes',
+        loadChildren: () => import('./sort-notes/sort-notes.module').then((m) => m.SortNotesModule)
       }
     ]
   }

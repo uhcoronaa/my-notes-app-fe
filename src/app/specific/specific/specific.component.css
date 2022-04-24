@@ -11,3 +11,7 @@
 .content {
     margin-left: 250px;
 }
+
+.custom-badge {
+    width: 32px;
+}

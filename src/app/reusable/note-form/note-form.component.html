@@ -44,8 +44,8 @@
                     <span class="input-group-text label-width">Status *</span>
                     <select class="form-select" aria-label="Default select example" formControlName="status" [class.is-invalid]="form.get('status')?.invalid && form.get('status')?.touched">
                         <option value="TO_DO">To Do</option>
-                        <option value="2">In Progress</option>
-                        <option value="3">Done</option>
+                        <option value="IN_PROGRESS">In Progress</option>
+                        <option value="DONE">Done</option>
                       </select>
                 </div>
                 <div *ngIf="form.get('status')?.invalid && form.get('status')?.touched" class="text-danger mt-1 error-size">

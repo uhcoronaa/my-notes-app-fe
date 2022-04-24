@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { userReducer } from './users/state/users.reducer';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { ReusableModule } from './reusable/reusable.module';
 
 @NgModule({
   declarations: [

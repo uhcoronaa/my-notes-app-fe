@@ -11,7 +11,7 @@ export class NotesService {
 
   constructor(private http: HttpClient) { }
 
-  fetchCategories(): Observable<Note[]> {
+  fetchNotes(): Observable<Note[]> {
     return this.http.get<Note[]>(`${environment.notes}`);
   }
 
@@ -29,6 +29,10 @@ export class NotesService {
 
   patchNote(id: string, note: Partial<Note>) {
     return this.http.patch<Note>(`${environment.notes}/${id}`, note);
+  }
+
+  patchManyNotes(notes: Partial<Note>[]) {
+    return this.http.patch<Note>(`${environment.notes}/patch-many`, notes);
   }
 
 }

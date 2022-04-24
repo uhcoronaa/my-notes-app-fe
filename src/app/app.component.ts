@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UsersService } from './services/users.service';
-import * as userSelectors from './users/state/users.selectors';
 import * as userActions from './users/state/users.actions';
 
 @Component({
@@ -11,9 +10,7 @@ import * as userActions from './users/state/users.actions';
 })
 export class AppComponent implements OnInit {
 
-  loggedUserObservable = this.store.select(userSelectors.loggedUser);
-
-  constructor(private store: Store, private userService: UsersService){}
+  constructor(private store: Store, private userService: UsersService) { }
 
   ngOnInit(): void {
     const userCredentials = this.userService.getUserCredentials();
