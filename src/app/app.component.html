@@ -1,1 +1,3 @@
+<div class="overlay" *ngIf="loadersObservable|async"></div>
 <router-outlet></router-outlet>
+<div class="spinner-border spinner text-primary" role="status" *ngIf="loadersObservable|async"></div>

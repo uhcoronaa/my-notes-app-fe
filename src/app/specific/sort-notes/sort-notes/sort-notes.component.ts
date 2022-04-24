@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import * as notesActions from '../../../specific/notes/state/notes.actions';
 import { Subscription } from 'rxjs';
 import * as sortNotesActions from '../state/sort-notes.actions';
+import * as loaderActions from '../../loader/loader.actions';
 
 @Component({
   selector: 'my-notes-app-sort-notes',
@@ -24,12 +25,14 @@ export class SortNotesComponent implements OnInit, OnDestroy {
   constructor(private notesService: NotesService, private store: Store) { }
 
   ngOnInit(): void {
+    this.store.dispatch(loaderActions.startLoading({ loadingName: 'LOAD_NOTES' }));
     this.subscriptions.push(this.notesService.fetchNotes()
       .subscribe((notes: Note[]) => {
         this.store.dispatch(notesActions.loadNotes({ notes }));
         this.todo = notes.filter((note) => note.status === 'TO_DO');
         this.inProgress = notes.filter((note) => note.status === 'IN_PROGRESS');
         this.done = notes.filter((note) => note.status === 'DONE');
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
       }));
   }
 
@@ -61,13 +64,14 @@ export class SortNotesComponent implements OnInit, OnDestroy {
         ...n,
         status: 'DONE'
       }));
+      this.store.dispatch(loaderActions.startLoading({ loadingName: 'PATCH_NOTES' }));
       this.subscriptions.push(
         this.notesService.patchManyNotes([
           ...this.todo,
           ...this.inProgress,
           ...this.done
         ]).subscribe((response)=>{
-
+          this.store.dispatch(loaderActions.stopLoading({ loadingName: 'PATCH_NOTES' }));
         })
       )
     }

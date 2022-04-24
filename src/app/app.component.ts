@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UsersService } from './services/users.service';
 import * as userActions from './users/state/users.actions';
+import * as loaderSelectors from './specific/loader/loader.selectors';
 
 @Component({
   selector: 'my-notes-app-root',
@@ -9,6 +10,8 @@ import * as userActions from './users/state/users.actions';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
+  loadersObservable = this.store.select(loaderSelectors.loadings);
 
   constructor(private store: Store, private userService: UsersService) { }
 

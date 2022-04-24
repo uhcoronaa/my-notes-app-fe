@@ -6,6 +6,7 @@ import { Note } from 'src/app/interfaces/note.interface';
 import { NotesService } from 'src/app/services/notes.service';
 import * as notesActions from '../state/notes.actions';
 import * as notesSelectors from '../state/notes.selectors';
+import * as loaderActions from '../../loader/loader.actions';
 
 @Component({
   selector: 'my-notes-app-notes',
@@ -20,9 +21,11 @@ export class NotesComponent implements OnInit, OnDestroy {
   constructor(private store: Store, private router: Router, private notesService: NotesService) { }
 
   ngOnInit(): void {
+    this.store.dispatch(loaderActions.startLoading({ loadingName: 'LOAD_NOTES' }));
     this.subscriptions.push(this.notesService.fetchNotes()
       .subscribe((notes: Note[]) => {
         this.store.dispatch(notesActions.loadNotes({ notes }));
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
       }));
   }
 
@@ -31,9 +34,11 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   deleteNote(id: string): void {
+    this.store.dispatch(loaderActions.startLoading({ loadingName: 'DELETE_NOTE' }));
     this.subscriptions.push(this.notesService.deleteNote(id)
       .subscribe(() => {
         this.store.dispatch(notesActions.deleteNote({ id }));
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'DELETE_NOTE' }));
       }));
   }
 
@@ -42,7 +47,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((s)=>{
+    this.subscriptions.forEach((s) => {
       s.unsubscribe();
     })
   }

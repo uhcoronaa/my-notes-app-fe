@@ -7,6 +7,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NotesService } from 'src/app/services/notes.service';
 import { Subscription } from 'rxjs';
+import * as loaderActions from '../../specific/loader/loader.actions';
 
 @Component({
   selector: 'app-state-login',
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   login(): void {
     this.form.markAllAsTouched();
     if (this.form.invalid) return;
+    this.store.dispatch(loaderActions.startLoading({loadingName: 'START_LOGIN'}));
     this.userService.login(this.form.value).subscribe((response) => {
       this.store.dispatch(userActions.accessTokenUpdated({ accessToken: response.accessToken }));
       this.store.dispatch(userActions.refreshTokenUpdated({ refreshToken: response.refreshToken }));
@@ -45,6 +47,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       localStorage.setItem('loggedUser', JSON.stringify(response.user));
       localStorage.setItem('accessToken', response.accessToken);
       localStorage.setItem('refreshToken', response.refreshToken);
+      this.store.dispatch(loaderActions.stopLoading({loadingName: 'START_LOGIN'}));
       this.router.navigate(['specific']);
     });
   }
@@ -56,6 +59,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   signUp(content: any): void {
     this.signUpForm.markAllAsTouched();
     if (this.signUpForm.invalid) return;
+    this.store.dispatch(loaderActions.startLoading({loadingName: 'START_SIGNUP'}));
     this.subscriptions.push(this.userService.signUp(this.signUpForm.value).subscribe((response) => {
       this.store.dispatch(userActions.accessTokenUpdated({ accessToken: response.accessToken }));
       this.store.dispatch(userActions.refreshTokenUpdated({ refreshToken: response.refreshToken }));
@@ -65,6 +69,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       localStorage.setItem('refreshToken', response.refreshToken);
       this.signUpModal && this.signUpModal.dismiss();
       this.signUpModal = null;
+      this.store.dispatch(loaderActions.stopLoading({loadingName: 'START_SIGNUP'}));
       this.router.navigate(['specific']);
     }));
   }

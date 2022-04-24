@@ -7,6 +7,7 @@ import { Note } from 'src/app/interfaces/note.interface';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { NotesService as NotesService } from 'src/app/services/notes.service';
 import * as notesActions from '../state/notes.actions';
+import * as loaderActions from '../../loader/loader.actions';
 
 @Component({
   selector: 'my-notes-app-create-note',
@@ -21,15 +22,19 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
   constructor(private categoriesService: CategoriesService, private notesService: NotesService, private store: Store, private router: Router) { }
 
   ngOnInit(): void {
+    this.store.dispatch(loaderActions.startLoading({ loadingName: 'LOAD_CATEGORIES' }));
     this.subscriptions.push(this.categoriesService.fetchCategories()
       .subscribe((categories: Category[]) => {
         this.categories = categories;
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_CATEGORIES' }));
       }));
   }
 
   saveNote(note: Partial<Note>) {
+    this.store.dispatch(loaderActions.startLoading({ loadingName: 'SAVE_NOTES' }));
     this.subscriptions.push(this.notesService.saveNote(note).subscribe((note) => {
       this.store.dispatch(notesActions.addNote({ note }));
+      this.store.dispatch(loaderActions.stopLoading({ loadingName: 'SAVE_NOTES' }));
       this.router.navigate(['specific', 'notes']);
     }))
   }

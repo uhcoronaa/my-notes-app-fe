@@ -7,6 +7,7 @@ import { NotesService } from 'src/app/services/notes.service';
 import * as userActions from '../../users/state/users.actions';
 import * as sortNotesActions from '../sort-notes/state/sort-notes.actions';
 import * as sortNotesSelectors from '../sort-notes/state/sort-notes.selectors';
+import * as loaderActions from '../loader/loader.actions';
 
 @Component({
   selector: 'my-notes-app-specific',
@@ -23,6 +24,7 @@ export class SpecificComponent implements OnInit, OnDestroy {
   constructor(private store: Store, private router: Router, private notesService: NotesService) { }
 
   ngOnInit(): void {
+    this.store.dispatch(loaderActions.startLoading({ loadingName: 'LOAD_NOTES' }));
     this.subscriptions.push(this.notesService.fetchNotes()
       .subscribe((notes: Note[]) => {
         const todoNotes = notes.filter((n)=>n.status === 'TO_DO').length;
@@ -31,6 +33,7 @@ export class SpecificComponent implements OnInit, OnDestroy {
         this.store.dispatch(sortNotesActions.updateTodoNotes({ todoNotes }));
         this.store.dispatch(sortNotesActions.updateInProgressNotes({ inProgressNotes }));
         this.store.dispatch(sortNotesActions.updateDoneNotes({ doneNotes }));
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
       }));
   }
 

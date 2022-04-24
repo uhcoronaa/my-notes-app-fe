@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { userReducer } from './users/state/users.reducer';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { loaderReducer } from './specific/loader/loader.reducer';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
       autoPause: true
     }),
     StoreModule.forFeature('user', userReducer),
+    StoreModule.forFeature('loader', loaderReducer),
     HttpClientModule,
     NgbModule
   ],
