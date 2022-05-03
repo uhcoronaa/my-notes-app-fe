@@ -8,6 +8,7 @@ import { CategoriesService } from 'src/app/services/categories.service';
 import { NotesService } from 'src/app/services/notes.service';
 import * as notesActions from '../state/notes.actions';
 import * as loaderActions from '../../loader/loader.actions';
+import * as unsavedFormsActions from '../../unsaved-forms/unsaved-forms.actions';
 
 @Component({
   selector: 'my-notes-app-edit-note',
@@ -58,7 +59,8 @@ export class EditNoteComponent implements OnInit , OnDestroy{
   ngOnDestroy(): void {
     this.subscriptions.forEach((s)=>{
       s.unsubscribe();
-    })
+    });
+    this.store.dispatch(unsavedFormsActions.unsavedFormsCleaned());
   }
 
 }

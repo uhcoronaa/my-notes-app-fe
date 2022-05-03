@@ -6,6 +6,7 @@ import { Category } from 'src/app/interfaces/categories.interface';
 import { CategoriesService } from 'src/app/services/categories.service';
 import * as categoriesActions from '../state/categories.actions';
 import * as loaderActions from '../../loader/loader.actions';
+import * as unsavedFormsActions from '../../unsaved-forms/unsaved-forms.actions';
 
 @Component({
   selector: 'my-notes-app-edit-category',
@@ -49,7 +50,8 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach((s)=>{
       s.unsubscribe();
-    })
+    });
+    this.store.dispatch(unsavedFormsActions.unsavedFormsCleaned());
   }
 
 }
