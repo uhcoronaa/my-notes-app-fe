@@ -7,6 +7,7 @@ import { CategoriesService } from 'src/app/services/categories.service';
 import * as categoriesActions from '../state/categories.actions';
 import * as categoriesSelectors from '../state/categories.selectors';
 import * as loaderActions from '../../loader/loader.actions';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'my-notes-app-categories',
@@ -18,7 +19,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   categoriesObservable: Observable<Category[]> = this.store.select(categoriesSelectors.categoriesList);
   subscriptions: Subscription[] = [];
 
-  constructor(private store: Store, private router: Router, private categoriesService: CategoriesService) { }
+  constructor(private store: Store, private router: Router, private categoriesService: CategoriesService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'LOAD_CATEGORIES' }));
@@ -39,6 +40,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.store.dispatch(categoriesActions.deleteCategory({ id }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'DELETE_CATEGORIES' }));
+        this.toastService.show('Category deleted successfuly', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
       }));
   }
 

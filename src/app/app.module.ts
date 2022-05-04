@@ -11,6 +11,8 @@ import { userReducer } from './users/state/users.reducer';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { loaderReducer } from './specific/loader/loader.reducer';
+import { ReusableModule } from './reusable/reusable.module';
+import { RefreshTokenInterceptor } from './interceptors/refresh-token.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,10 +30,12 @@ import { loaderReducer } from './specific/loader/loader.reducer';
     StoreModule.forFeature('user', userReducer),
     StoreModule.forFeature('loader', loaderReducer),
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    ReusableModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

@@ -9,6 +9,7 @@ import { NotesService as NotesService } from 'src/app/services/notes.service';
 import * as notesActions from '../state/notes.actions';
 import * as loaderActions from '../../loader/loader.actions';
 import * as unsavedFormsActions from '../../unsaved-forms/unsaved-forms.actions';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'my-notes-app-create-note',
@@ -20,7 +21,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
   categories: Category[] | null = null;
   subscriptions: Subscription[] = [];
 
-  constructor(private categoriesService: CategoriesService, private notesService: NotesService, private store: Store, private router: Router) { }
+  constructor(private categoriesService: CategoriesService, private notesService: NotesService, private store: Store, private router: Router, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'LOAD_CATEGORIES' }));
@@ -36,7 +37,9 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.notesService.saveNote(note).subscribe((note) => {
       this.store.dispatch(notesActions.addNote({ note }));
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'SAVE_NOTES' }));
+      this.store.dispatch(unsavedFormsActions.unsavedFormsCleaned());
       this.router.navigate(['specific', 'notes']);
+      this.toastService.show('Note created successfully', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
     }))
   }
 

@@ -7,6 +7,7 @@ import { CategoriesService } from 'src/app/services/categories.service';
 import * as categoriesActions from '../state/categories.actions';
 import * as loaderActions from '../../loader/loader.actions';
 import * as unsavedFormsActions from '../../unsaved-forms/unsaved-forms.actions';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'my-notes-app-edit-category',
@@ -18,7 +19,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
   editCategory: Category | null = null;
   subscriptions: Subscription[] = [];
 
-  constructor(private store: Store, private categoriesService: CategoriesService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private store: Store, private categoriesService: CategoriesService, private activatedRoute: ActivatedRoute, private router: Router, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'LOAD_CATEGORY' }));
@@ -35,7 +36,9 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
         if (this.editCategory?._id) {
           this.store.dispatch(categoriesActions.updateCategory({ id: this.editCategory._id, category }));
           this.store.dispatch(loaderActions.stopLoading({ loadingName: 'SAVE_CATEGORY' }));
+          this.store.dispatch(unsavedFormsActions.unsavedFormsCleaned());
           this.router.navigate(['specific', 'categories']);
+          this.toastService.show('Category updated successfully', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
         }
       }))
     }

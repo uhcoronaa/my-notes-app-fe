@@ -32,4 +32,8 @@ export class UsersService {
     return this.http.post<{ accessToken: string, refreshToken: string, user: Partial<User> }>(`${environment.users}/signup`, userCredentials);
   }
 
+  refreshToken(refreshBody: any) {
+    return this.http.post(`${environment.users}/refresh-token`, refreshBody);
+  }
+
 }

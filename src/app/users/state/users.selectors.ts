@@ -10,3 +10,7 @@ export const loggedUser = createSelector(userState, (state) => {
 export const accessToken = createSelector(userState, (state) => {
     return state.accessToken;
 });
+
+export const refreshToken = createSelector(userState, (state) => {
+    return state.refreshToken;
+});

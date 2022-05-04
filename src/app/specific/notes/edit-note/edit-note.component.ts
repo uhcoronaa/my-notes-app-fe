@@ -9,6 +9,7 @@ import { NotesService } from 'src/app/services/notes.service';
 import * as notesActions from '../state/notes.actions';
 import * as loaderActions from '../../loader/loader.actions';
 import * as unsavedFormsActions from '../../unsaved-forms/unsaved-forms.actions';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'my-notes-app-edit-note',
@@ -21,7 +22,7 @@ export class EditNoteComponent implements OnInit , OnDestroy{
   categories: Category[] | null = null;
   subscriptions: Subscription[] = [];
 
-  constructor(private notesService: NotesService, private activatedRoute: ActivatedRoute, private store: Store, private router: Router, private categoriesService: CategoriesService) { }
+  constructor(private notesService: NotesService, private activatedRoute: ActivatedRoute, private store: Store, private router: Router, private categoriesService: CategoriesService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'LOAD_NOTE' }));
@@ -44,7 +45,9 @@ export class EditNoteComponent implements OnInit , OnDestroy{
         if (this.editNote?._id) {
           this.store.dispatch(notesActions.updateNote({ id: this.editNote._id, note }));
           this.store.dispatch(loaderActions.stopLoading({ loadingName: 'EDIT_NOTE' }));
+          this.store.dispatch(unsavedFormsActions.unsavedFormsCleaned());
           this.router.navigate(['specific', 'notes']);
+          this.toastService.show('Note updated successfully', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
         }
       }))
     }

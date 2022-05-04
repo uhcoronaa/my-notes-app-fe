@@ -7,6 +7,7 @@ import { NotesService } from 'src/app/services/notes.service';
 import * as notesActions from '../state/notes.actions';
 import * as notesSelectors from '../state/notes.selectors';
 import * as loaderActions from '../../loader/loader.actions';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'my-notes-app-notes',
@@ -18,7 +19,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   notesObservable: Observable<Note[]> = this.store.select(notesSelectors.notesList);
   subscriptions: Subscription[] = [];
 
-  constructor(private store: Store, private router: Router, private notesService: NotesService) { }
+  constructor(private store: Store, private router: Router, private notesService: NotesService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'LOAD_NOTES' }));
@@ -39,6 +40,7 @@ export class NotesComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.store.dispatch(notesActions.deleteNote({ id }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'DELETE_NOTE' }));
+        this.toastService.show('Note deleted successfully', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
       }));
   }
 

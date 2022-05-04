@@ -7,6 +7,7 @@ import { CategoriesService } from 'src/app/services/categories.service';
 import * as categoriesActions from '../state/categories.actions';
 import * as loaderActions from '../../loader/loader.actions';
 import * as unsavedFormsActions from '../../unsaved-forms/unsaved-forms.actions';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'my-notes-app-create-category',
@@ -17,7 +18,7 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
-  constructor(private router: Router, private categoriesService: CategoriesService, private store: Store) { }
+  constructor(private router: Router, private categoriesService: CategoriesService, private store: Store, private toastService: ToastService) { }
 
   ngOnInit(): void {
   }
@@ -27,7 +28,9 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.categoriesService.saveCategory(category).subscribe((category) => {
       this.store.dispatch(categoriesActions.addCategory({ category }));
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'SAVE_CATEGORIES' }));
+      this.store.dispatch(unsavedFormsActions.unsavedFormsCleaned());
       this.router.navigate(['specific', 'categories']);
+      this.toastService.show('Category saved successfully', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
     }));
   }
 

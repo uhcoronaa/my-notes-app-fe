@@ -1,3 +1,4 @@
 <div class="overlay" *ngIf="loadersObservable|async"></div>
 <router-outlet></router-outlet>
 <div class="spinner-border spinner text-primary" role="status" *ngIf="loadersObservable|async"></div>
+<my-notes-app-toasts aria-live="polite" aria-atomic="true"></my-notes-app-toasts>
