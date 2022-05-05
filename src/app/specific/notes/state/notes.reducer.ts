@@ -1,6 +1,6 @@
 import { Action, ActionReducer, createReducer, on } from "@ngrx/store";
 import { Note } from "src/app/interfaces/note.interface";
-import { addNote, deleteNote, loadNotes, updateNote } from "./notes.actions";
+import { addNote, deleteNote, loadNotes, saveApiError, updateNote } from "./notes.actions";
 import { initialState, NotesState } from "./notes.state";
 
 
@@ -43,10 +43,18 @@ const updateNoteReducer = (state: NotesState, action: any) => {
     }
 }
 
+const saveApiErrorReducer = (state: NotesState, action: any) => {
+    return {
+        ...state,
+        errors: [...state.errors, action.error],
+    }
+}
+
 export const notesReducer: ActionReducer<NotesState, Action> = createReducer(
     initialState,
     on(loadNotes, loadNotesReducer),
     on(deleteNote, deleteNoteReducer),
     on(addNote, addNoteReducer),
-    on(updateNote, updateNoteReducer)
+    on(updateNote, updateNoteReducer),
+    on(saveApiError, saveApiErrorReducer),
 )

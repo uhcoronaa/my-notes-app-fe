@@ -26,6 +26,10 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.categoriesService.fetchById(this.activatedRoute.snapshot.params['id']).subscribe((category: Category) => {
       this.editCategory = category;
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_CATEGORY' }));
+    }, (error) => {
+      this.store.dispatch(categoriesActions.saveApiError({ error: { type: 'GET', messages: error.error.messages } }));
+      this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_CATEGORY' }));
+      this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
     }));
   }
 
@@ -40,7 +44,11 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
           this.router.navigate(['specific', 'categories']);
           this.toastService.show('Category updated successfully', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
         }
-      }))
+      }, (error) => {
+        this.store.dispatch(categoriesActions.saveApiError({ error: { type: 'PATCH', messages: error.error.messages } }));
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'SAVE_CATEGORY' }));
+        this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+      }));
     }
   }
 
@@ -51,7 +59,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((s)=>{
+    this.subscriptions.forEach((s) => {
       s.unsubscribe();
     });
     this.store.dispatch(unsavedFormsActions.unsavedFormsCleaned());

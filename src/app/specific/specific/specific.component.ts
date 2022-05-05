@@ -8,6 +8,8 @@ import * as userActions from '../../users/state/users.actions';
 import * as sortNotesActions from '../sort-notes/state/sort-notes.actions';
 import * as sortNotesSelectors from '../sort-notes/state/sort-notes.selectors';
 import * as loaderActions from '../loader/loader.actions';
+import { ToastService } from 'src/app/services/toast.service';
+import * as notesActions from '../notes/state/notes.actions';
 
 @Component({
   selector: 'my-notes-app-specific',
@@ -21,7 +23,7 @@ export class SpecificComponent implements OnInit, OnDestroy {
   doneNotesObservable = this.store.select(sortNotesSelectors.doneNotes);
   subscriptions: Subscription[] = [];
 
-  constructor(private store: Store, private router: Router, private notesService: NotesService) { }
+  constructor(private store: Store, private router: Router, private notesService: NotesService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'LOAD_NOTES' }));
@@ -34,6 +36,10 @@ export class SpecificComponent implements OnInit, OnDestroy {
         this.store.dispatch(sortNotesActions.updateInProgressNotes({ inProgressNotes }));
         this.store.dispatch(sortNotesActions.updateDoneNotes({ doneNotes }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
+      }, (error) => {
+        this.store.dispatch(notesActions.saveApiError({ error: { type: 'GET', messages: error.error.messages } }));
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
+        this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
       }));
   }
 

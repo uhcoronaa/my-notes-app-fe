@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import * as userActions from '../state/users.actions';
 import { UsersService } from 'src/app/services/users.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { NotesService } from 'src/app/services/notes.service';
 import { Subscription } from 'rxjs';
 import * as loaderActions from '../../specific/loader/loader.actions';
 
@@ -21,7 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   signUpModal: NgbModalRef | null = null;
   subscriptions: Subscription[] = [];
 
-  constructor(private store: Store, private router: Router, private fb: FormBuilder, private userService: UsersService, private modalService: NgbModal, private notesService: NotesService) { }
+  constructor(private store: Store, private router: Router, private fb: FormBuilder, private userService: UsersService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({

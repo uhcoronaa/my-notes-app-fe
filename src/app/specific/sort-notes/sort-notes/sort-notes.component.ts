@@ -7,6 +7,7 @@ import * as notesActions from '../../../specific/notes/state/notes.actions';
 import { Subscription } from 'rxjs';
 import * as sortNotesActions from '../state/sort-notes.actions';
 import * as loaderActions from '../../loader/loader.actions';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'my-notes-app-sort-notes',
@@ -22,7 +23,7 @@ export class SortNotesComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
 
-  constructor(private notesService: NotesService, private store: Store) { }
+  constructor(private notesService: NotesService, private store: Store, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'LOAD_NOTES' }));
@@ -33,6 +34,10 @@ export class SortNotesComponent implements OnInit, OnDestroy {
         this.inProgress = notes.filter((note) => note.status === 'IN_PROGRESS');
         this.done = notes.filter((note) => note.status === 'DONE');
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
+      }, (error) => {
+        this.store.dispatch(notesActions.saveApiError({ error: { type: 'GET', messages: error.error.messages } }));
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
+        this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
       }));
   }
 
@@ -49,18 +54,18 @@ export class SortNotesComponent implements OnInit, OnDestroy {
       const todoNotes = this.todo.length;
       const inProgressNotes = this.inProgress.length;
       const doneNotes = this.done.length;
-      this.store.dispatch(sortNotesActions.updateTodoNotes({todoNotes}));
-      this.store.dispatch(sortNotesActions.updateInProgressNotes({inProgressNotes}));
-      this.store.dispatch(sortNotesActions.updateDoneNotes({doneNotes}));
-      this.todo = this.todo.map((n)=>({
+      this.store.dispatch(sortNotesActions.updateTodoNotes({ todoNotes }));
+      this.store.dispatch(sortNotesActions.updateInProgressNotes({ inProgressNotes }));
+      this.store.dispatch(sortNotesActions.updateDoneNotes({ doneNotes }));
+      this.todo = this.todo.map((n) => ({
         ...n,
         status: 'TO_DO'
       }));
-      this.inProgress = this.inProgress.map((n)=>({
+      this.inProgress = this.inProgress.map((n) => ({
         ...n,
         status: 'IN_PROGRESS'
       }));
-      this.done = this.done.map((n)=>({
+      this.done = this.done.map((n) => ({
         ...n,
         status: 'DONE'
       }));
@@ -70,8 +75,12 @@ export class SortNotesComponent implements OnInit, OnDestroy {
           ...this.todo,
           ...this.inProgress,
           ...this.done
-        ]).subscribe((response)=>{
+        ]).subscribe((response) => {
           this.store.dispatch(loaderActions.stopLoading({ loadingName: 'PATCH_NOTES' }));
+        }, (error) => {
+          this.store.dispatch(notesActions.saveApiError({ error: { type: 'PATCH', messages: error.error.messages } }));
+          this.store.dispatch(loaderActions.stopLoading({ loadingName: 'PATCH_NOTES' }));
+          this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
         })
       )
     }

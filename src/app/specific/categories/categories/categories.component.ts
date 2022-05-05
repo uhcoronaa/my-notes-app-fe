@@ -27,6 +27,10 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       .subscribe((categories: Category[]) => {
         this.store.dispatch(categoriesActions.loadCategories({ categories }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_CATEGORIES' }));
+      }, (error) => {
+        this.store.dispatch(categoriesActions.saveApiError({ error: { type: 'GET', messages: error.error.messages } }));
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_CATEGORIES' }));
+        this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
       }));
   }
 
@@ -41,6 +45,10 @@ export class CategoriesComponent implements OnInit, OnDestroy {
         this.store.dispatch(categoriesActions.deleteCategory({ id }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'DELETE_CATEGORIES' }));
         this.toastService.show('Category deleted successfuly', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
+      }, (error) => {
+        this.store.dispatch(categoriesActions.saveApiError({ error: { type: 'DELETE', messages: error.error.messages } }));
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'DELETE_CATEGORIES' }));
+        this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
       }));
   }
 
@@ -49,7 +57,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((s)=>{
+    this.subscriptions.forEach((s) => {
       s.unsubscribe();
     })
   }

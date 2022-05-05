@@ -1,6 +1,6 @@
 import { Action, ActionReducer, createReducer, on } from "@ngrx/store";
 import { Category } from "src/app/interfaces/categories.interface";
-import { addCategory, deleteCategory, loadCategories, updateCategory } from "./categories.actions";
+import { addCategory, deleteCategory, loadCategories, saveApiError, updateCategory } from "./categories.actions";
 import { CategoriesState, initialState } from "./categories.state";
 
 const loadCategoriesReducer = (state: CategoriesState, action: any) => {
@@ -42,10 +42,18 @@ const updateCategoryReducer = (state: CategoriesState, action: any) => {
     }
 }
 
+const saveApiErrorReducer = (state: CategoriesState, action: any) => {
+    return {
+        ...state,
+        errors: [...state.errors, action.error],
+    }
+}
+
 export const categoriesReducer: ActionReducer<CategoriesState, Action> = createReducer(
     initialState,
     on(loadCategories, loadCategoriesReducer),
     on(deleteCategory, deleteCategoryReducer),
     on(addCategory, addCategoryReducer),
-    on(updateCategory, updateCategoryReducer)
-)
+    on(updateCategory, updateCategoryReducer),
+    on(saveApiError, saveApiErrorReducer),
+);
