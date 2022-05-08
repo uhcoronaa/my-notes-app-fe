@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Category } from 'src/app/interfaces/categories.interface';
 import * as unsavedFormActions from '../../specific/unsaved-forms/unsaved-forms.actions';
+import * as categorySelector from '../../specific/categories/state/categories.selectors';
+import * as categoryActions from '../../specific/categories/state/categories.actions';
 @Component({
   selector: 'my-notes-app-category-form',
   templateUrl: './category-form.component.html',
@@ -17,7 +19,10 @@ export class CategoryFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private store: Store) { }
 
+  errorsObservable = this.store.select(categorySelector.errors);
+
   form: FormGroup = new FormGroup({});
+  duplicatedCategory: boolean = false;
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -28,6 +33,10 @@ export class CategoryFormComponent implements OnInit {
     this.store.dispatch(unsavedFormActions.formInitialized({ formId: 'CATEGORY_FORM', value: this.form.value }));
     this.form.valueChanges.subscribe((value) => {
       this.store.dispatch(unsavedFormActions.formValueChanged({ formId: 'CATEGORY_FORM', value }));
+      this.store.dispatch(categoryActions.resetApiErrors());
+    });
+    this.errorsObservable.subscribe((errors) => {
+      this.duplicatedCategory = errors.some((e) => e.messages.some((e2) => e2 === 'DUPLICATED_CATEGORY'));
     });
   }
 
@@ -39,6 +48,7 @@ export class CategoryFormComponent implements OnInit {
   }
 
   cancel(): void {
+    this.store.dispatch(categoryActions.resetApiErrors());
     this.cancelEvent.emit(true);
   }
 

@@ -48,6 +48,7 @@ export class EditNoteComponent implements OnInit, OnDestroy {
   }
 
   edit(note: Partial<Note>) {
+    this.store.dispatch(categoriesActions.resetApiErrors());
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'EDIT_NOTE' }));
     if (this.editNote?._id) {
       this.subscriptions.push(this.notesService.patchNote(this.editNote._id, note).subscribe((note) => {

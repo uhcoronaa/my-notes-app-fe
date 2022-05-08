@@ -7,3 +7,4 @@ export const deleteCategory = createAction('Category Deleted', props<{ id: strin
 export const addCategory = createAction('Category Added', props<{ category: Category }>());
 export const updateCategory = createAction('Category Updated', props<{ id: string, category: Partial<Category> }>());
 export const saveApiError = createAction('Category Error Ocurred', props<{ error: IError }>());
+export const resetApiErrors = createAction('Note Error Reset');

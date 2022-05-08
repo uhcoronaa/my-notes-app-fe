@@ -7,3 +7,4 @@ export const deleteNote = createAction('Note Deleted', props<{ id: string }>());
 export const addNote = createAction('Note Added', props<{ note: Note }>());
 export const updateNote = createAction('Note Updated', props<{ id: string , note: Partial<Note> }>());
 export const saveApiError = createAction('Note Error Ocurred', props<{ error: IError }>());
+export const resetApiErrors = createAction('Note Error Reset');

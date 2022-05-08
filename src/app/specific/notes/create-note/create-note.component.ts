@@ -38,6 +38,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
   }
 
   saveNote(note: Partial<Note>) {
+    this.store.dispatch(categoriesActions.resetApiErrors());
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'SAVE_NOTES' }));
     this.subscriptions.push(this.notesService.saveNote(note).subscribe((note) => {
       this.store.dispatch(notesActions.addNote({ note }));

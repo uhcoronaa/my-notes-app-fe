@@ -24,6 +24,7 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
   }
 
   saveCategory(category: Partial<Category>) {
+    this.store.dispatch(categoriesActions.resetApiErrors());
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'SAVE_CATEGORIES' }));
     this.subscriptions.push(this.categoriesService.saveCategory(category).subscribe((category) => {
       this.store.dispatch(categoriesActions.addCategory({ category }));

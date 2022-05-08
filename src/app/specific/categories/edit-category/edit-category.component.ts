@@ -34,6 +34,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
   }
 
   edit(category: Partial<Category>) {
+    this.store.dispatch(categoriesActions.resetApiErrors());
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'SAVE_CATEGORY' }));
     if (this.editCategory?._id) {
       this.subscriptions.push(this.categoriesService.patchCategory(this.editCategory._id, category).subscribe((category) => {

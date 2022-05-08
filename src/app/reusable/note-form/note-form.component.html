@@ -7,6 +7,9 @@
 </div>
 
 <div class="card p-4">
+    <div *ngIf="duplicatedNote" class="text-danger error-size2 mb-2">
+        Duplicated note
+    </div>
     <form [formGroup]="form">
         <div class="row mb-4">
             <div class="col-6 mb-3">
