@@ -7,6 +7,7 @@ import { NotesService } from 'src/app/services/notes.service';
 import * as notesActions from '../state/notes.actions';
 import * as notesSelectors from '../state/notes.selectors';
 import * as loaderActions from '../../loader/loader.actions';
+import * as sortNotesActions from '../../sort-notes/state/sort-notes.actions';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -26,6 +27,13 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.notesService.fetchNotes()
       .subscribe((notes: Note[]) => {
         this.store.dispatch(notesActions.loadNotes({ notes }));
+        const todoNotes = notes.filter((n)=>n.status === 'TO_DO').length;
+        const inProgressNotes = notes.filter((n)=>n.status === 'IN_PROGRESS').length;
+        const doneNotes = notes.filter((n)=>n.status === 'DONE').length;
+        this.store.dispatch(sortNotesActions.updateTodoNotes({ todoNotes }));
+        this.store.dispatch(sortNotesActions.updateInProgressNotes({ inProgressNotes }));
+        this.store.dispatch(sortNotesActions.updateDoneNotes({ doneNotes }));
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
       }, (error) => {
         this.store.dispatch(notesActions.saveApiError({ error: { type: 'GET', messages: error.error.messages } }));

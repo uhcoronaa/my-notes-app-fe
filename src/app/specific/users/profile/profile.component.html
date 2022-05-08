@@ -1,0 +1,52 @@
+<div class="fs-2 mb-4">
+    My profile
+</div>
+
+<div class="card p-4">
+    <form [formGroup]="form">
+        <div class="row mb-4">
+            <div class="col-6 mb-3">
+                <div class="input-group">
+                    <span class="input-group-text label-width">First Name *</span>
+                    <input type="text" class="form-control" placeholder="First Name" formControlName="firstName" [class.is-invalid]="form.get('firstName')?.invalid && form.get('firstName')?.touched">
+                </div>
+                <div *ngIf="form.get('firstName')?.invalid && form.get('firstName')?.touched" class="text-danger mt-1 error-size">
+                    Please fill the required field
+                </div>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="input-group">
+                    <span class="input-group-text label-width">Last Name *</span>
+                    <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName" [class.is-invalid]="form.get('lastName')?.invalid && form.get('lastName')?.touched">
+                </div>
+                <div *ngIf="form.get('lastName')?.invalid && form.get('lastName')?.touched" class="text-danger mt-1 error-size">
+                    Please fill the required field
+                </div>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="input-group">
+                    <span class="input-group-text label-width">Username *</span>
+                    <input type="text" class="form-control" placeholder="Username" formControlName="username" [class.is-invalid]="form.get('username')?.invalid && form.get('username')?.touched">
+                </div>
+                <div *ngIf="form.get('username')?.invalid && form.get('username')?.touched" class="text-danger mt-1 error-size">
+                    Please fill the required field
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="d-flex flex-row align-items-center">
+                    <div>
+                        <label for="formFile" class="form-label me-4">Profile Picture</label>
+                    </div>
+                    <div class="flex-fill">
+                        <input class="form-control" type="file" id="formFile" (change)="handleImageChange($event)">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="d-flex flex-row-reverse mt-4">
+    <button type="button" class="btn btn-primary ms-3" (click)="save()">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="cancel()">Cancel</button>
+</div>

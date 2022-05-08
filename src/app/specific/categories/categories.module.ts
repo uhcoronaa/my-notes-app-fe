@@ -8,6 +8,7 @@ import { categoriesReducer } from './state/categories.reducer';
 import { CreateCategoryComponent } from './create-category/create-category.component';
 import { ReusableModule } from 'src/app/reusable/reusable.module';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { EditCategoryComponent } from './edit-category/edit-category.component';
     CommonModule,
     CategoriesRoutingModule,
     StoreModule.forFeature('categories', categoriesReducer),
-    ReusableModule
+    ReusableModule,
+    DirectivesModule,
   ]
 })
 export class CategoriesModule { }

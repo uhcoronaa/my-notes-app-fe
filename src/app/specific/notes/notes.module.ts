@@ -8,6 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { notesReducer } from './state/notes.reducer';
 import { NotesComponent } from './notes/notes.component';
 import { EditNoteComponent } from './edit-note/edit-note.component';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { EditNoteComponent } from './edit-note/edit-note.component';
     NotesRoutingModule,
     ReusableModule,
     StoreModule.forFeature('notes', notesReducer),
+    DirectivesModule,
   ]
 })
 export class NotesModule { }

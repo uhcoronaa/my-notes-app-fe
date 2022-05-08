@@ -36,4 +36,12 @@ export class UsersService {
     return this.http.post(`${environment.users}/refresh-token`, refreshBody);
   }
 
+  updateUser(user: Partial<User>, id: string): Observable<{ accessToken: string, refreshToken: string, user: Partial<User> }> {
+    return this.http.patch<{ accessToken: string, refreshToken: string, user: Partial<User> }>(`${environment.users}/${id}`, user);
+  }
+
+  changePassword(password: string, id: string): Observable<{ accessToken: string, refreshToken: string, user: Partial<User> }> {
+    return this.http.patch<{ accessToken: string, refreshToken: string, user: Partial<User> }>(`${environment.users}/change-password/${id}`, { password });
+  }
+
 }

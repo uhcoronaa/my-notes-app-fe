@@ -11,7 +11,7 @@
 <div class="card mb-3 p-4" *ngFor="let category of categoriesObservable | async">
     <div class="d-flex flex-row align-items-center">
         <div class="me-5">
-            <img [src]="category.image" alt="" width="90" height="90" class="rounded-circle me-2" loadImgError="assets/default-category-image.jpeg">
+            <img [src]="category.image" alt="" width="90" height="90" class="rounded-circle me-2" loadImgError="assets/image-error.png">
         </div>
         <div class="me-auto">
             <div>

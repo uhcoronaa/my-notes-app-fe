@@ -15,3 +15,14 @@
 .custom-badge {
     width: 32px;
 }
+
+.title-color {
+    color: #333333;
+}
+
+.ellipsis {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

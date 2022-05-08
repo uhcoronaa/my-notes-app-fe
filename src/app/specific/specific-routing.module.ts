@@ -20,6 +20,14 @@ const routes: Routes = [
       {
         path: 'sort-notes',
         loadChildren: () => import('./sort-notes/sort-notes.module').then((m) => m.SortNotesModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./users/users.module').then((m) => m.UsersModule)
+      },
+      {
+        path: 'summary',
+        loadChildren: () => import('./summary/summary.module').then((m) => m.SummaryModule)
       }
     ]
   }

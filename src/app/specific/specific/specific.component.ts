@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Note } from 'src/app/interfaces/note.interface';
@@ -10,6 +10,7 @@ import * as sortNotesSelectors from '../sort-notes/state/sort-notes.selectors';
 import * as loaderActions from '../loader/loader.actions';
 import { ToastService } from 'src/app/services/toast.service';
 import * as notesActions from '../notes/state/notes.actions';
+import * as userSelectors from '../../users/state/users.selectors';
 
 @Component({
   selector: 'my-notes-app-specific',
@@ -21,7 +22,9 @@ export class SpecificComponent implements OnInit, OnDestroy {
   todoNotesObservable = this.store.select(sortNotesSelectors.todoNotes);
   inProgressNotesObservable = this.store.select(sortNotesSelectors.inProgressNotes);
   doneNotesObservable = this.store.select(sortNotesSelectors.doneNotes);
+  loggedUserObservable = this.store.select(userSelectors.loggedUser);
   subscriptions: Subscription[] = [];
+  showOutlet: boolean = false;
 
   constructor(private store: Store, private router: Router, private notesService: NotesService, private toastService: ToastService) { }
 
@@ -29,9 +32,9 @@ export class SpecificComponent implements OnInit, OnDestroy {
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'LOAD_NOTES' }));
     this.subscriptions.push(this.notesService.fetchNotes()
       .subscribe((notes: Note[]) => {
-        const todoNotes = notes.filter((n)=>n.status === 'TO_DO').length;
-        const inProgressNotes = notes.filter((n)=>n.status === 'IN_PROGRESS').length;
-        const doneNotes = notes.filter((n)=>n.status === 'DONE').length;
+        const todoNotes = notes.filter((n) => n.status === 'TO_DO').length;
+        const inProgressNotes = notes.filter((n) => n.status === 'IN_PROGRESS').length;
+        const doneNotes = notes.filter((n) => n.status === 'DONE').length;
         this.store.dispatch(sortNotesActions.updateTodoNotes({ todoNotes }));
         this.store.dispatch(sortNotesActions.updateInProgressNotes({ inProgressNotes }));
         this.store.dispatch(sortNotesActions.updateDoneNotes({ doneNotes }));
@@ -54,9 +57,25 @@ export class SpecificComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((s)=>{
+    this.subscriptions.forEach((s) => {
       s.unsubscribe();
     })
+  }
+
+  onActivate(event: any) {
+    this.showOutlet = true;
+  }
+
+  onDeactivate(event: any) {
+    this.showOutlet = false;
+  }
+
+  checkProfile():void{
+    this.router.navigate(['specific', 'profile']);
+  }
+
+  changePassword():void{
+    this.router.navigate(['specific', 'profile', 'change-password']);
   }
 
 }

@@ -7,6 +7,8 @@ import { UsersService } from 'src/app/services/users.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import * as loaderActions from '../../specific/loader/loader.actions';
+import { ToastService } from 'src/app/services/toast.service';
+import { encrypt } from 'src/assets/cipher';
 
 @Component({
   selector: 'app-state-login',
@@ -20,7 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   signUpModal: NgbModalRef | null = null;
   subscriptions: Subscription[] = [];
 
-  constructor(private store: Store, private router: Router, private fb: FormBuilder, private userService: UsersService, private modalService: NgbModal) { }
+  constructor(private store: Store, private router: Router, private fb: FormBuilder, private userService: UsersService, private modalService: NgbModal, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -38,17 +40,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   login(): void {
     this.form.markAllAsTouched();
     if (this.form.invalid) return;
-    this.store.dispatch(loaderActions.startLoading({loadingName: 'START_LOGIN'}));
-    this.userService.login(this.form.value).subscribe((response) => {
+    this.store.dispatch(loaderActions.startLoading({ loadingName: 'START_LOGIN' }));
+    const userBody = {
+      ...this.form.value,
+      password: encrypt(this.form.get('password')?.value)
+    }
+    this.subscriptions.push(this.userService.login(userBody).subscribe((response) => {
       this.store.dispatch(userActions.accessTokenUpdated({ accessToken: response.accessToken }));
       this.store.dispatch(userActions.refreshTokenUpdated({ refreshToken: response.refreshToken }));
       this.store.dispatch(userActions.loggedUserUpdated({ loggedUser: response.user }));
       localStorage.setItem('loggedUser', JSON.stringify(response.user));
       localStorage.setItem('accessToken', response.accessToken);
       localStorage.setItem('refreshToken', response.refreshToken);
-      this.store.dispatch(loaderActions.stopLoading({loadingName: 'START_LOGIN'}));
+      this.store.dispatch(loaderActions.stopLoading({ loadingName: 'START_LOGIN' }));
       this.router.navigate(['specific']);
-    });
+    }, (error) => {
+      this.store.dispatch(loaderActions.stopLoading({ loadingName: 'START_LOGIN' }));
+      this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+    }));
   }
 
   open(content: any) {
@@ -58,8 +67,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   signUp(content: any): void {
     this.signUpForm.markAllAsTouched();
     if (this.signUpForm.invalid) return;
-    this.store.dispatch(loaderActions.startLoading({loadingName: 'START_SIGNUP'}));
-    this.subscriptions.push(this.userService.signUp(this.signUpForm.value).subscribe((response) => {
+    const userBody = {
+      ...this.signUpForm.value,
+      password: encrypt(this.signUpForm.get('password')?.value)
+    }
+    this.store.dispatch(loaderActions.startLoading({ loadingName: 'START_SIGNUP' }));
+    this.subscriptions.push(this.userService.signUp(userBody).subscribe((response) => {
       this.store.dispatch(userActions.accessTokenUpdated({ accessToken: response.accessToken }));
       this.store.dispatch(userActions.refreshTokenUpdated({ refreshToken: response.refreshToken }));
       this.store.dispatch(userActions.loggedUserUpdated({ loggedUser: response.user }));
@@ -68,8 +81,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       localStorage.setItem('refreshToken', response.refreshToken);
       this.signUpModal && this.signUpModal.dismiss();
       this.signUpModal = null;
-      this.store.dispatch(loaderActions.stopLoading({loadingName: 'START_SIGNUP'}));
+      this.store.dispatch(loaderActions.stopLoading({ loadingName: 'START_SIGNUP' }));
       this.router.navigate(['specific']);
+    }, (error) => {
+      this.store.dispatch(loaderActions.stopLoading({ loadingName: 'START_SIGNUP' }));
+      this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
     }));
   }
 
