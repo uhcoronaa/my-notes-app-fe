@@ -1,5 +1,5 @@
 import { Action, ActionReducer, createReducer, on } from "@ngrx/store";
-import { accessTokenUpdated, loggedUserUpdated, refreshTokenUpdated, resetApiErrors, saveApiError } from "./users.actions";
+import { accessTokenUpdated, loggedUserUpdated, refreshTokenUpdated, resetApiErrors, saveApiError, userImageUpdated } from "./users.actions";
 import { initialState, UserState } from "./users.state";
 
 const loggedUserUpdatedReducer = (state: UserState, action: any) => {
@@ -37,6 +37,16 @@ const resetErrorsReducer = (state: UserState, action: any) => {
     }
 }
 
+const userImageUpdatedReducer = (state: UserState, action: any) => {
+    return {
+        ...state,
+        loggedUser: {
+            ...state.loggedUser,
+            image: action.image
+        }
+    }
+}
+
 export const userReducer: ActionReducer<UserState, Action> = createReducer(
     initialState,
     on(loggedUserUpdated, loggedUserUpdatedReducer),
@@ -44,4 +54,5 @@ export const userReducer: ActionReducer<UserState, Action> = createReducer(
     on(refreshTokenUpdated, refreshAccessTokenUpdatedReducer),
     on(saveApiError, saveApiErrorReducer),
     on(resetApiErrors, resetErrorsReducer),
+    on(userImageUpdated, userImageUpdatedReducer)
 )

@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  my-notes-app-be:
+    container_name: my-notes-app-fe
+    build: .
+    image: my-notes-app-fe
+    ports: 
+      - 80:80

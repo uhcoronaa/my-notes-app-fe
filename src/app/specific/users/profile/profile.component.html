@@ -34,11 +34,14 @@
             </div>
             <div class="col-12">
                 <div class="d-flex flex-row align-items-center">
-                    <div>
-                        <label for="formFile" class="form-label me-4">Profile Picture</label>
+                    <div class="me-3">
+                        <img [src]="this.form.get('image')?.value" width="90" height="90" loadImgError="assets/image-error.png" class="rounded-circle me-2">
                     </div>
                     <div class="flex-fill">
-                        <input class="form-control" type="file" id="formFile" (change)="handleImageChange($event)">
+                        <div>
+                            <label for="formFile" class="form-label me-4">Profile Picture</label>
+                        </div>
+                        <input class="form-control" type="file" id="formFile" (change)="handleImageChange($event)" accept="image/*">
                     </div>
                 </div>
             </div>

@@ -18,6 +18,8 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   categoriesObservable: Observable<Category[]> = this.store.select(categoriesSelectors.categoriesList);
   subscriptions: Subscription[] = [];
+  errorsObservable = this.store.select(categoriesSelectors.errors);
+  invalidDelete: boolean = false;
 
   constructor(private store: Store, private router: Router, private categoriesService: CategoriesService, private toastService: ToastService) { }
 
@@ -32,13 +34,18 @@ export class CategoriesComponent implements OnInit, OnDestroy {
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_CATEGORIES' }));
         this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
       }));
+    this.subscriptions.push(this.errorsObservable.subscribe((errors) => {
+      this.invalidDelete = errors.some((e) => e.messages.some((e2) => e2 === 'NOTES_WITH_CATEGORY'));
+    }));
   }
 
   newCategory(): void {
+    this.store.dispatch(categoriesActions.resetApiErrors());
     this.router.navigate(['specific', 'categories', 'create']);
   }
 
   deleteCategory(id: string): void {
+    this.store.dispatch(categoriesActions.resetApiErrors());
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'DELETE_CATEGORIES' }));
     this.subscriptions.push(this.categoriesService.deleteCategory(id)
       .subscribe(() => {
@@ -53,6 +60,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   }
 
   editCategory(id: string): void {
+    this.store.dispatch(categoriesActions.resetApiErrors());
     this.router.navigate(['specific', 'categories', id]);
   }
 

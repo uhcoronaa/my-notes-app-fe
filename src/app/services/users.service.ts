@@ -44,4 +44,8 @@ export class UsersService {
     return this.http.patch<{ accessToken: string, refreshToken: string, user: Partial<User> }>(`${environment.users}/change-password/${id}`, { password });
   }
 
+  getUserImage(id: string) {
+    return this.http.get<{ image: string }>(`${environment.users}/image/${id}`);
+  }
+
 }

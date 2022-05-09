@@ -4,6 +4,7 @@ import { NotesService } from 'src/app/services/notes.service';
 import { Note } from 'src/app/interfaces/note.interface';
 import { Store } from '@ngrx/store';
 import * as notesActions from '../../../specific/notes/state/notes.actions';
+import * as notesSelectors from '../../../specific/notes/state/notes.selectors';
 import { Subscription } from 'rxjs';
 import * as sortNotesActions from '../state/sort-notes.actions';
 import * as loaderActions from '../../loader/loader.actions';
@@ -21,6 +22,7 @@ export class SortNotesComponent implements OnInit, OnDestroy {
   done: Note[] = [];
   inProgress: Note[] = [];
   subscriptions: Subscription[] = [];
+  notesObservable = this.store.select(notesSelectors.notesList);
 
 
   constructor(private notesService: NotesService, private store: Store, private toastService: ToastService) { }

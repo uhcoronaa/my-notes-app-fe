@@ -10,6 +10,9 @@
     <div *ngIf="duplicatedNote" class="text-danger error-size2 mb-2">
         Duplicated note
     </div>
+    <div *ngIf="!categories.length" class="text-danger mb-2 error-size2">
+        Remember to create categories before to create notes
+    </div>
     <form [formGroup]="form">
         <div class="row mb-4">
             <div class="col-6 mb-3">
@@ -32,16 +35,6 @@
                     Please fill the required field
                 </div>
             </div>
-            <div class="col-6">
-                <div class="d-flex flex-row align-items-center">
-                    <div>
-                        <label for="formFile" class="form-label me-4">Category Picture</label>
-                    </div>
-                    <div class="flex-fill">
-                        <input class="form-control" type="file" id="formFile" (change)="handleImageChange($event)" data-buttonText="Your label here.">
-                    </div>
-                </div>
-            </div>
             <div class="col-6 mb-3">
                 <div class="input-group">
                     <span class="input-group-text label-width">Status *</span>
@@ -53,6 +46,19 @@
                 </div>
                 <div *ngIf="form.get('status')?.invalid && form.get('status')?.touched" class="text-danger mt-1 error-size">
                     Please fill the required field
+                </div>
+            </div>
+            <div class="col-12 mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="me-3">
+                        <img [src]="this.form.get('image')?.value" width="90" height="90" loadImgError="assets/image-error.png" class="rounded-circle me-2">
+                    </div>
+                    <div class="flex-fill">
+                        <div>
+                            <label for="formFile" class="form-label me-4">Category Picture</label>
+                        </div>
+                        <input class="form-control" type="file" id="formFile" (change)="handleImageChange($event)" data-buttonText="Your label here." accept="image/*">
+                    </div>
                 </div>
             </div>
             <div class="col-12 mb-3">

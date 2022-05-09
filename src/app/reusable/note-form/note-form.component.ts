@@ -29,11 +29,11 @@ export class NoteFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: [this.note?.name || null, [Validators.required]],
-      description: [this.note?.description || null, [Validators.required]],
-      category: [this.note?.category || this.categories[0].name || null, [Validators.required]],
-      image: [this.note?.image || null, []],
-      status: [this.note?.status || 'TO_DO', [Validators.required]]
+      name: [this.note ? this.note.name : null, [Validators.required]],
+      description: [this.note ? this.note.description : null, [Validators.required]],
+      category: [this.note ? this.note.category : this.categories.length ? this.categories[0].name : null, [Validators.required]],
+      image: [this.note ? this.note.image : null, []],
+      status: [this.note ? this.note.status : 'TO_DO', [Validators.required]]
     });
     this.store.dispatch(unsavedFormActions.formInitialized({ formId: 'NOTE_FORM', value: this.form.value }));
     this.form.valueChanges.subscribe((value) => {

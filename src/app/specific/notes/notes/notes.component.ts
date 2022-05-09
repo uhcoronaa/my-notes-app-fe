@@ -27,9 +27,9 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.notesService.fetchNotes()
       .subscribe((notes: Note[]) => {
         this.store.dispatch(notesActions.loadNotes({ notes }));
-        const todoNotes = notes.filter((n)=>n.status === 'TO_DO').length;
-        const inProgressNotes = notes.filter((n)=>n.status === 'IN_PROGRESS').length;
-        const doneNotes = notes.filter((n)=>n.status === 'DONE').length;
+        const todoNotes = notes.filter((n) => n.status === 'TO_DO').length;
+        const inProgressNotes = notes.filter((n) => n.status === 'IN_PROGRESS').length;
+        const doneNotes = notes.filter((n) => n.status === 'DONE').length;
         this.store.dispatch(sortNotesActions.updateTodoNotes({ todoNotes }));
         this.store.dispatch(sortNotesActions.updateInProgressNotes({ inProgressNotes }));
         this.store.dispatch(sortNotesActions.updateDoneNotes({ doneNotes }));

@@ -8,6 +8,7 @@ import * as userActions from '../../../users/state/users.actions';
 import * as loaderActions from '../../loader/loader.actions';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
+import * as unsavedFormActions from '../../unsaved-forms/unsaved-forms.actions';
 
 @Component({
   selector: 'my-notes-app-profile',
@@ -33,10 +34,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userSelectorObservable.subscribe((user) => {
       this.form.patchValue({ firstName: user?.firstName, lastName: user?.lastName, image: user?.image, username: user?.username });
       this._id = user?._id || '';
+      this.store.dispatch(unsavedFormActions.formInitialized({ formId: 'PROFILE', value: this.form.value }));
+      this.form.valueChanges.subscribe((value) => {
+        this.store.dispatch(unsavedFormActions.formValueChanged({ formId: 'PROFILE', value }));
+      });
     });
   }
 
   save(): void {
+    this.form.markAllAsTouched();
+    if (this.form.invalid) return;
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'UPDATE_USER' }));
     this.subcriptions.push(this.userService.updateUser(this.form.value, this._id).subscribe((response) => {
       this.store.dispatch(userActions.accessTokenUpdated({ accessToken: response.accessToken }));
@@ -47,7 +54,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       localStorage.setItem('refreshToken', response.refreshToken);
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'UPDATE_USER' }));
       this.toastService.show('Profile updated successfully', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
-      this.router.navigate(['specific']);
+      this.subcriptions.push(this.userService.getUserImage(response.user._id || '').subscribe((image) => {
+        this.store.dispatch(userActions.userImageUpdated({ image: image.image }));
+        this.router.navigate(['specific', 'notes']);
+      }));
     }, (error) => {
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'UPDATE_USER' }));
       this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
@@ -55,7 +65,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   cancel(): void {
-    this.router.navigate(['specific']);
+    this.router.navigate(['specific', 'notes']);
   }
 
   handleImageChange(event: any) {
@@ -72,6 +82,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.subcriptions.forEach((s) => {
       s.unsubscribe();
     });
+    this.store.dispatch(unsavedFormActions.unsavedFormsCleaned());
   }
 
 }

@@ -24,6 +24,9 @@ export class AppComponent implements OnInit, OnDestroy {
       this.store.dispatch(userActions.loggedUserUpdated({ loggedUser: userCredentials.user }));
       this.store.dispatch(userActions.accessTokenUpdated({ accessToken: userCredentials.accessToken }));
       this.store.dispatch(userActions.refreshTokenUpdated({ refreshToken: userCredentials.refreshToken }));
+      this.subscriptions.push(this.userService.getUserImage(userCredentials.user._id || '').subscribe((image) => {
+        this.store.dispatch(userActions.userImageUpdated({ image: image.image }));
+      }));
     }
     this.subscriptions.push(this.loadersObservable.subscribe((loader) => {
       setTimeout(() => {

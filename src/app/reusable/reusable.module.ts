@@ -6,6 +6,7 @@ import { NoteFormComponent } from './note-form/note-form.component';
 import { UnsavedFormConfirmationComponent } from './unsaved-form-confirmation/unsaved-form-confirmation.component';
 import { ToastsComponent } from './toasts/toasts.component';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { DirectivesModule } from '../directives/directives.module';
 
 
 
@@ -20,6 +21,7 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     ReactiveFormsModule,
     NgbToastModule,
+    DirectivesModule
   ],
   exports: [
     CategoryFormComponent,

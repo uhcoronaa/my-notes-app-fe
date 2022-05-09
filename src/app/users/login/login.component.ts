@@ -71,7 +71,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       localStorage.setItem('accessToken', response.accessToken);
       localStorage.setItem('refreshToken', response.refreshToken);
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'START_LOGIN' }));
-      this.router.navigate(['specific']);
+      this.subscriptions.push(this.userService.getUserImage(response.user._id || '').subscribe((image) => {
+        this.store.dispatch(userActions.userImageUpdated({ image: image.image }));
+        this.router.navigate(['specific']);
+      }));
     }, (error) => {
       this.store.dispatch(userActions.saveApiError({ error: { type: 'POST', messages: error.error.messages } }));
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'START_LOGIN' }));
@@ -103,7 +106,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.signUpModal && this.signUpModal.dismiss();
       this.signUpModal = null;
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'START_SIGNUP' }));
-      this.router.navigate(['specific']);
+      this.subscriptions.push(this.userService.getUserImage(response.user._id || '').subscribe((image) => {
+        this.store.dispatch(userActions.userImageUpdated({ image: image.image }));
+        this.router.navigate(['specific']);
+      }));
     }, (error) => {
       this.store.dispatch(userActions.saveApiError({ error: { type: 'POST', messages: error.error.messages } }));
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'START_SIGNUP' }));
