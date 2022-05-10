@@ -42,7 +42,7 @@ export class SpecificComponent implements OnInit, OnDestroy {
       }, (error) => {
         this.store.dispatch(notesActions.saveApiError({ error: { type: 'GET', messages: error.error.messages } }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
-        this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+        this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
       }));
   }
 

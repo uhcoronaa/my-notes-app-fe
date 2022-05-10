@@ -38,7 +38,7 @@ export class NotesComponent implements OnInit, OnDestroy {
       }, (error) => {
         this.store.dispatch(notesActions.saveApiError({ error: { type: 'GET', messages: error.error.messages } }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
-        this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+        this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
       }));
   }
 
@@ -52,11 +52,11 @@ export class NotesComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.store.dispatch(notesActions.deleteNote({ id }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'DELETE_NOTE' }));
-        this.toastService.show('Note deleted successfully', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
+        this.toastService.show('Nota eliminada correctamente', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
       }, (error) => {
         this.store.dispatch(notesActions.saveApiError({ error: { type: 'DELETE', messages: error.error.messages } }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'DELETE_NOTE' }));
-        this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+        this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
       }));
   }
 

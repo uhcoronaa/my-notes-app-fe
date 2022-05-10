@@ -20,8 +20,8 @@ export class UnsavedFormsGuard implements CanActivate {
       concatMap((unsaved) => {
         if (!unsaved) {
           const modalRef = this.modalService.open(UnsavedFormConfirmationComponent, { centered: true });
-          modalRef.componentInstance.title = 'Unsaved Changes';
-          modalRef.componentInstance.message = 'Are you sure you want to leave this page?. There are unsaved changes in your forms.';
+          modalRef.componentInstance.title = 'Cambios sin guardar';
+          modalRef.componentInstance.message = '¿Estás seguro de que deseas salir de esta página? Aún tienes cambios sin guardar.';
           return modalRef.result;
         }
         return of(unsaved);

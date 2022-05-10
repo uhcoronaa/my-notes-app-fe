@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }, (error) => {
       this.store.dispatch(userActions.saveApiError({ error: { type: 'POST', messages: error.error.messages } }));
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'START_LOGIN' }));
-      this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+      this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
     }));
   }
 
@@ -113,7 +113,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }, (error) => {
       this.store.dispatch(userActions.saveApiError({ error: { type: 'POST', messages: error.error.messages } }));
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'START_SIGNUP' }));
-      this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+      this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
     }));
   }
 

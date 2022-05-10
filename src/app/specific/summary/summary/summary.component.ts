@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 
 @Component({
   selector: 'my-notes-app-summary',
@@ -15,7 +15,16 @@ export class SummaryComponent implements OnInit, OnDestroy {
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.subscriptions.push(this.store.subscribe((state) => {
+    this.subscriptions.push(this.store.pipe(
+      map((state: any) => {
+        return {
+          ...state,
+          user: {
+            loggedUser: state?.user?.loggedUser
+          }
+        }
+      })
+    ).subscribe((state) => {
       this.state = state;
     }));
   }

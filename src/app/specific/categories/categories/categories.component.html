@@ -1,15 +1,15 @@
 <div class="d-flex flex-row align-items-center mb-3">
     <div class="fs-2 me-auto">
-        Categories
+        Categorías
     </div>
     <div>
-        <button type="button" class="btn btn-outline-primary" (click)="newCategory()">Add Category <i
+        <button type="button" class="btn btn-outline-primary" (click)="newCategory()">Agregar Categoría <i
                 class="bi bi-plus-square ms-2"></i></button>
     </div>
 </div>
 
 <div *ngIf="invalidDelete" class="text-danger error-size2 mb-2">
-    This category can't be deleted due to notes using this category
+    Esta categoría no puede ser eliminada porque está siendo usada por alguna nota
 </div>
 
 <div class="card mb-3 p-4" *ngFor="let category of categoriesObservable | async">
@@ -19,18 +19,18 @@
         </div>
         <div class="me-auto">
             <div>
-                <b>Category Name: </b> {{category.name}}
+                <b>Nombre: </b> {{category.name}}
             </div>
             <div>
-                <b>Description: </b>{{category.description}}
+                <b>Descripción: </b>{{category.description}}
             </div>
         </div>
         <div>
             <button class="btn btn-link text-decoration-none text-primary me-5" (click)="editCategory(category._id)">
-                <i class="bi bi-pencil me-2"></i> Edit
+                <i class="bi bi-pencil me-2"></i> Editar
             </button>
             <button class="btn btn-link text-decoration-none text-danger me-4" (click)="deleteCategory(category._id)">
-                <i class="bi bi-trash me-2"></i> Delete
+                <i class="bi bi-trash me-2"></i> Eliminar
             </button>
         </div>
     </div>
@@ -42,7 +42,7 @@
             <i class="bi bi-card-heading"></i>
         </div>
         <div class="fs-3 title-color">
-            Nothing in categories
+            Sin categorías creadas
         </div>
     </div>
 </div>

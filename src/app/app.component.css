@@ -1,24 +1,42 @@
 .overlay {
-    position: fixed;
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(50, 50, 50, 0.5);
+  z-index: 2;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 50px;
+  width: 50px;
+  z-index: 5;
+  margin-left: -25px;
+  margin-top: -25px;
+  opacity: 1;
+}
+
+div.no-phone {
+  display: none;
+}
+
+div.desktop-display {
+  display: block;
+}
+
+@media screen and (max-width: 1023px) {
+  div.no-phone {
     display: block;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(50,50,50, 0.5);
-    z-index: 2;
   }
 
-  .spinner{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    height: 50px;
-    width: 50px;
-    z-index: 5;
-    margin-left: -25px;
-    margin-top: -25px;
-    opacity: 1;
+  div.desktop-display {
+    display: none;
+  }
 }

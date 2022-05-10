@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api',
-  users: 'http://localhost:3000/api/users',
-  categories: 'http://localhost:3000/api/categories',
-  notes: 'http://localhost:3000/api/notes',
+  apiUrl: 'http://localhost:8081/api',
+  users: 'http://localhost:8081/api/users',
+  categories: 'http://localhost:8081/api/categories',
+  notes: 'http://localhost:8081/api/notes',
 };
 
 /*

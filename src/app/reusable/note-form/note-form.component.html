@@ -1,51 +1,51 @@
 <div class="fs-2 mb-4" *ngIf="formType==='create'">
-    New Note
+    Nueva nota
 </div>
 
 <div class="fs-2 mb-4" *ngIf="formType==='edit'">
-    Edit Note
+    Editar nota
 </div>
 
 <div class="card p-4">
     <div *ngIf="duplicatedNote" class="text-danger error-size2 mb-2">
-        Duplicated note
+        Nota ya creada
     </div>
     <div *ngIf="!categories.length" class="text-danger mb-2 error-size2">
-        Remember to create categories before to create notes
+        Recuerda crear categorías previo a crear notas
     </div>
     <form [formGroup]="form">
         <div class="row mb-4">
             <div class="col-6 mb-3">
                 <div class="input-group">
-                    <span class="input-group-text label-width">Name *</span>
-                    <input type="text" class="form-control" placeholder="Name" formControlName="name" [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched">
+                    <span class="input-group-text label-width">Nombre *</span>
+                    <input type="text" class="form-control" placeholder="Nombre" formControlName="name" [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched">
                 </div>
                 <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="text-danger mt-1 error-size">
-                    Please fill the required field
+                    Por favor llene el campo requerido
                 </div>
             </div>
             <div class="col-6 mb-3">
                 <div class="input-group">
-                    <span class="input-group-text label-width">Category *</span>
+                    <span class="input-group-text label-width">Categoría *</span>
                     <select class="form-select" aria-label="Default select example" formControlName="category" [class.is-invalid]="form.get('category')?.invalid && form.get('category')?.touched">
                         <option *ngFor="let category of categories" [value]="category.name">{{category.name}}</option>
                       </select>
                 </div>
                 <div *ngIf="form.get('category')?.invalid && form.get('category')?.touched" class="text-danger mt-1 error-size">
-                    Please fill the required field
+                    Por favor llene el campo requerido
                 </div>
             </div>
             <div class="col-6 mb-3">
                 <div class="input-group">
-                    <span class="input-group-text label-width">Status *</span>
+                    <span class="input-group-text label-width">Estado *</span>
                     <select class="form-select" aria-label="Default select example" formControlName="status" [class.is-invalid]="form.get('status')?.invalid && form.get('status')?.touched">
-                        <option value="TO_DO">To Do</option>
-                        <option value="IN_PROGRESS">In Progress</option>
-                        <option value="DONE">Done</option>
+                        <option value="TO_DO">Por hacer</option>
+                        <option value="IN_PROGRESS">En progreso</option>
+                        <option value="DONE">Terminado</option>
                       </select>
                 </div>
                 <div *ngIf="form.get('status')?.invalid && form.get('status')?.touched" class="text-danger mt-1 error-size">
-                    Please fill the required field
+                    Por favor llene el campo requerido
                 </div>
             </div>
             <div class="col-12 mb-3">
@@ -55,7 +55,7 @@
                     </div>
                     <div class="flex-fill">
                         <div>
-                            <label for="formFile" class="form-label me-4">Category Picture</label>
+                            <label for="formFile" class="form-label me-4">Imagen</label>
                         </div>
                         <input class="form-control" type="file" id="formFile" (change)="handleImageChange($event)" data-buttonText="Your label here." accept="image/*">
                     </div>
@@ -63,11 +63,11 @@
             </div>
             <div class="col-12 mb-3">
                 <div class="input-group">
-                    <span class="input-group-text label-width">Description *</span>
-                    <textarea rows="5" class="form-control" placeholder="Description" formControlName="description" [class.is-invalid]="form.get('description')?.invalid && form.get('description')?.touched"></textarea>
+                    <span class="input-group-text label-width">Descripción *</span>
+                    <textarea rows="5" class="form-control" placeholder="Descripción" formControlName="description" [class.is-invalid]="form.get('description')?.invalid && form.get('description')?.touched"></textarea>
                 </div>
                 <div *ngIf="form.get('description')?.invalid && form.get('description')?.touched" class="text-danger mt-1 error-size">
-                    Please fill the required field
+                    Por favor llene el campo requerido
                 </div>
             </div>
         </div>
@@ -75,6 +75,6 @@
 </div>
 
 <div class="d-flex flex-row-reverse mt-4">
-    <button type="button" class="btn btn-primary ms-3" (click)="save()">Save</button>
-    <button type="button" class="btn btn-outline-dark" (click)="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary ms-3" (click)="save()">Guardar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="cancel()">Cancelar</button>
 </div>

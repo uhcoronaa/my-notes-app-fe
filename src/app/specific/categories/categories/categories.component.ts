@@ -32,7 +32,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       }, (error) => {
         this.store.dispatch(categoriesActions.saveApiError({ error: { type: 'GET', messages: error.error.messages } }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_CATEGORIES' }));
-        this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+        this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
       }));
     this.subscriptions.push(this.errorsObservable.subscribe((errors) => {
       this.invalidDelete = errors.some((e) => e.messages.some((e2) => e2 === 'NOTES_WITH_CATEGORY'));
@@ -51,11 +51,11 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.store.dispatch(categoriesActions.deleteCategory({ id }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'DELETE_CATEGORIES' }));
-        this.toastService.show('Category deleted successfuly', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
+        this.toastService.show('Categoría eliminada correctamente', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
       }, (error) => {
         this.store.dispatch(categoriesActions.saveApiError({ error: { type: 'DELETE', messages: error.error.messages } }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'DELETE_CATEGORIES' }));
-        this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+        this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
       }));
   }
 

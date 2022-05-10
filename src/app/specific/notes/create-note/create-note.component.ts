@@ -33,7 +33,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
       }, (error) => {
         this.store.dispatch(categoriesActions.saveApiError({ error: { type: 'GET', messages: error.error.messages } }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_CATEGORIES' }));
-        this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+        this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
       }));
   }
 
@@ -45,11 +45,11 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'SAVE_NOTES' }));
       this.store.dispatch(unsavedFormsActions.unsavedFormsCleaned());
       this.router.navigate(['specific', 'notes']);
-      this.toastService.show('Note created successfully', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
+      this.toastService.show('Nota creada correctamente', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
     }, (error) => {
       this.store.dispatch(notesActions.saveApiError({ error: { type: 'POST', messages: error.error.messages } }));
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'SAVE_NOTES' }));
-      this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+      this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
     }));
   }
 

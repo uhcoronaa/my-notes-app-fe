@@ -1,5 +1,5 @@
 .sidenav {
-    width: 250px;
+    width: 270px;
     position: fixed;
 }
 
@@ -9,7 +9,7 @@
 }
 
 .content {
-    margin-left: 250px;
+    margin-left: 270px;
 }
 
 .custom-badge {

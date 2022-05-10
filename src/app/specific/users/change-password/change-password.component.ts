@@ -60,11 +60,15 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       localStorage.setItem('accessToken', response.accessToken);
       localStorage.setItem('refreshToken', response.refreshToken);
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'UPDATE_USER' }));
-      this.toastService.show('Password updated successfully', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
-      this.router.navigate(['specific', 'notes']);
+      this.toastService.show('Contraseña actualizada correctamente', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
+      this.subcriptions.push(this.userService.getUserImage(response.user._id || '').subscribe((image) => {
+        this.store.dispatch(userActions.userImageUpdated({ image: image.image }));
+        this.store.dispatch(unsavedFormActions.unsavedFormsCleaned());
+        this.router.navigate(['specific', 'notes']);
+      }));
     }, (error) => {
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'UPDATE_USER' }));
-      this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+      this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
     }));
   }
 

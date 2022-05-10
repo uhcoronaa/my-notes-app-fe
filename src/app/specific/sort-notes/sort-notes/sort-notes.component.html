@@ -1,14 +1,14 @@
 <div class="h-100" *ngIf="(notesObservable|async)?.length">
     <div class="h-100 d-flex flex-column align-items-stretch">
         <div class="fs-2 mb-2">
-            My Notes
+            Mis notas
         </div>
         <div class="custom-header-height">
             <div class="row h-100" cdkDropListGroup>
                 <div class="col-4 h-100">
                     <div class="card p-3 h-100" cdkDropList [cdkDropListData]="todo" (cdkDropListDropped)="drop($event)">
                         <div class="fs-5 mb-2">
-                            To do
+                            Por hacer
                         </div>
                         <div class="overflow-auto rounded">
                             <div class="card p-2 move-cursor mb-2" *ngFor="let item of todo" cdkDrag>
@@ -22,10 +22,10 @@
                                         </div>
                                         <hr class="mt-1 mb-1">
                                         <div>
-                                            <span><strong>Name: </strong></span>{{item.name}}
+                                            <span><strong>Nombre: </strong></span>{{item.name}}
                                         </div>
                                         <div>
-                                            <span><strong>Category: </strong></span>{{item.category}}
+                                            <span><strong>Categoría: </strong></span>{{item.category}}
                                         </div>
                                     </div>
                                 </div>
@@ -37,7 +37,7 @@
                     <div class="card p-3 h-100" cdkDropList [cdkDropListData]="inProgress"
                         (cdkDropListDropped)="drop($event)">
                         <div class="fs-5 mb-2">
-                            In Progress
+                            En progreso
                         </div>
                         <div class="overflow-auto rounded">
                             <div class="card p-2 move-cursor mb-2" *ngFor="let item of inProgress" cdkDrag>
@@ -51,10 +51,10 @@
                                         </div>
                                         <hr class="mt-1 mb-1">
                                         <div>
-                                            <span><strong>Name: </strong></span>{{item.name}}
+                                            <span><strong>Nombre: </strong></span>{{item.name}}
                                         </div>
                                         <div>
-                                            <span><strong>Category: </strong></span>{{item.category}}
+                                            <span><strong>Categoría: </strong></span>{{item.category}}
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                 <div class="col-4 h-100">
                     <div class="card p-3 h-100" cdkDropList [cdkDropListData]="done" (cdkDropListDropped)="drop($event)">
                         <div class="fs-5 mb-2">
-                            Done
+                            Finalizado
                         </div>
                         <div class="overflow-auto rounded">
                             <div class="card p-2 move-cursor mb-2" *ngFor="let item of done" cdkDrag>
@@ -79,10 +79,10 @@
                                         </div>
                                         <hr class="mt-1 mb-1">
                                         <div>
-                                            <span><strong>Name: </strong></span>{{item.name}}
+                                            <span><strong>Nombre: </strong></span>{{item.name}}
                                         </div>
                                         <div>
-                                            <span><strong>Category: </strong></span>{{item.category}}
+                                            <span><strong>Categoría: </strong></span>{{item.category}}
                                         </div>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
             <i class="bi bi-card-heading"></i>
         </div>
         <div class="fs-3 title-color">
-            There are no notes to sort
+            No hay notas por ordenar
         </div>
     </div>
 </div>

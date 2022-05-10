@@ -31,11 +31,11 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'SAVE_CATEGORIES' }));
       this.store.dispatch(unsavedFormsActions.unsavedFormsCleaned());
       this.router.navigate(['specific', 'categories']);
-      this.toastService.show('Category saved successfully', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
+      this.toastService.show('Categoría creada correctamente', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
     }, (error) => {
       this.store.dispatch(categoriesActions.saveApiError({ error: { type: 'POST', messages: error.error.messages } }));
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'SAVE_CATEGORIES' }));
-      this.toastService.show('An error ocurred while performing your request', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+      this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
     }));
   }
 
