@@ -31,17 +31,17 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       password: [null, [Validators.required]],
       confirmPassword: [null, [Validators.required]],
     });
-    this.userSelectorObservable.subscribe((user) => {
+    this.subcriptions.push(this.userSelectorObservable.subscribe((user) => {
       this.form.patchValue({ firstName: user?.firstName, lastName: user?.lastName, image: user?.image, username: user?.username });
       this._id = user?._id || '';
-    });
-    this.form.valueChanges.subscribe(() => {
+    }));
+    this.subcriptions.push(this.form.valueChanges.subscribe(() => {
       this.incorrectConfirmation = false;
-    });
+    }));
     this.store.dispatch(unsavedFormActions.formInitialized({ formId: 'CHANGE_PASSWORD', value: this.form.value }));
-    this.form.valueChanges.subscribe((value) => {
+    this.subcriptions.push(this.form.valueChanges.subscribe((value) => {
       this.store.dispatch(unsavedFormActions.formValueChanged({ formId: 'CHANGE_PASSWORD', value }));
-    });
+    }));
   }
 
   save(): void {

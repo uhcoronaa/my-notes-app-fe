@@ -21,6 +21,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   form: FormGroup = new FormGroup({});
   subcriptions: Subscription[] = [];
   _id: string = '';
+  errorsObservable = this.store.select(userSelector.errors);
+  duplicatedUsername: boolean = false;
 
   constructor(private fb: FormBuilder, private store: Store, private userService: UsersService, private router: Router, private toastService: ToastService) { }
 
@@ -31,14 +33,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
       image: [null, []],
       username: [null, [Validators.required]]
     });
-    this.userSelectorObservable.subscribe((user) => {
+    this.subcriptions.push(this.userSelectorObservable.subscribe((user) => {
       this.form.patchValue({ firstName: user?.firstName, lastName: user?.lastName, image: user?.image, username: user?.username });
       this._id = user?._id || '';
       this.store.dispatch(unsavedFormActions.formInitialized({ formId: 'PROFILE', value: this.form.value }));
-      this.form.valueChanges.subscribe((value) => {
+      this.subcriptions.push(this.form.valueChanges.subscribe((value) => {
+        this.store.dispatch(userActions.resetApiErrors());
         this.store.dispatch(unsavedFormActions.formValueChanged({ formId: 'PROFILE', value }));
-      });
-    });
+      }));
+    }));
+    this.subcriptions.push(this.errorsObservable.subscribe((errors) => {
+      this.duplicatedUsername = errors.some((e) => e.messages.some((e2) => e2 === 'DUPLICATED_USERNAME'));
+    }));
   }
 
   save(): void {
@@ -57,15 +63,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.subcriptions.push(this.userService.getUserImage(response.user._id || '').subscribe((image) => {
         this.store.dispatch(userActions.userImageUpdated({ image: image.image }));
         this.store.dispatch(unsavedFormActions.unsavedFormsCleaned());
+        this.store.dispatch(userActions.resetApiErrors());
         this.router.navigate(['specific', 'notes']);
       }));
     }, (error) => {
       this.store.dispatch(loaderActions.stopLoading({ loadingName: 'UPDATE_USER' }));
+      this.store.dispatch(userActions.saveApiError({ error: { type: 'PATCH', messages: error.error.messages } }));
       this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
     }));
   }
 
   cancel(): void {
+    this.store.dispatch(userActions.resetApiErrors());
     this.router.navigate(['specific', 'notes']);
   }
 
@@ -84,6 +93,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       s.unsubscribe();
     });
     this.store.dispatch(unsavedFormActions.unsavedFormsCleaned());
+    this.store.dispatch(userActions.resetApiErrors());
   }
 
 }

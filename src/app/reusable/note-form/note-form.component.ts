@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Category } from 'src/app/interfaces/categories.interface';
@@ -6,13 +6,14 @@ import { Note } from 'src/app/interfaces/note.interface';
 import * as unsavedFormActions from '../../specific/unsaved-forms/unsaved-forms.actions';
 import * as notesSelectors from '../../specific/notes/state/notes.selectors';
 import * as notesActions from '../../specific/notes/state/notes.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'my-notes-app-note-form',
   templateUrl: './note-form.component.html',
   styleUrls: ['./note-form.component.css']
 })
-export class NoteFormComponent implements OnInit {
+export class NoteFormComponent implements OnInit, OnDestroy {
 
   @Input() formType: 'edit' | 'create' = 'create';
   @Input() note: Note | null = null;
@@ -26,6 +27,7 @@ export class NoteFormComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
   duplicatedNote: boolean = false;
+  subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -36,13 +38,13 @@ export class NoteFormComponent implements OnInit {
       status: [this.note ? this.note.status : 'TO_DO', [Validators.required]]
     });
     this.store.dispatch(unsavedFormActions.formInitialized({ formId: 'NOTE_FORM', value: this.form.value }));
-    this.form.valueChanges.subscribe((value) => {
+    this.subscriptions.push(this.form.valueChanges.subscribe((value) => {
       this.store.dispatch(notesActions.resetApiErrors());
       this.store.dispatch(unsavedFormActions.formValueChanged({ formId: 'NOTE_FORM', value }));
-    });
-    this.errorsObservable.subscribe((errors) => {
+    }));
+    this.subscriptions.push(this.errorsObservable.subscribe((errors) => {
       this.duplicatedNote = errors.some((e) => e.messages.some((e2) => e2 === 'DUPLICATED_NOTE'));
-    });
+    }));
   }
 
   save(): void {
@@ -65,6 +67,12 @@ export class NoteFormComponent implements OnInit {
     reader.onload = function () {
       imageControl?.patchValue(reader.result?.toString());
     };
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((s) => {
+      s.unsubscribe();
+    });
   }
 
 }

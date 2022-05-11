@@ -1,16 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Category } from 'src/app/interfaces/categories.interface';
 import * as unsavedFormActions from '../../specific/unsaved-forms/unsaved-forms.actions';
 import * as categorySelector from '../../specific/categories/state/categories.selectors';
 import * as categoryActions from '../../specific/categories/state/categories.actions';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'my-notes-app-category-form',
   templateUrl: './category-form.component.html',
   styleUrls: ['./category-form.component.css']
 })
-export class CategoryFormComponent implements OnInit {
+export class CategoryFormComponent implements OnInit, OnDestroy {
 
   @Input() formType: 'edit' | 'create' = 'create';
   @Input() category: Category | null = null;
@@ -23,6 +24,7 @@ export class CategoryFormComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
   duplicatedCategory: boolean = false;
+  subscriptions: Subscription[] = [];
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -31,13 +33,13 @@ export class CategoryFormComponent implements OnInit {
       image: [this.category?.image || null, []],
     });
     this.store.dispatch(unsavedFormActions.formInitialized({ formId: 'CATEGORY_FORM', value: this.form.value }));
-    this.form.valueChanges.subscribe((value) => {
+    this.subscriptions.push(this.form.valueChanges.subscribe((value) => {
       this.store.dispatch(unsavedFormActions.formValueChanged({ formId: 'CATEGORY_FORM', value }));
       this.store.dispatch(categoryActions.resetApiErrors());
-    });
-    this.errorsObservable.subscribe((errors) => {
+    }));
+    this.subscriptions.push(this.errorsObservable.subscribe((errors) => {
       this.duplicatedCategory = errors.some((e) => e.messages.some((e2) => e2 === 'DUPLICATED_CATEGORY'));
-    });
+    }));
   }
 
   save(): void {
@@ -60,6 +62,12 @@ export class CategoryFormComponent implements OnInit {
     reader.onload = function () {
       imageControl?.patchValue(reader.result?.toString());
     };
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((s) => {
+      s.unsubscribe();
+    });
   }
 
 }
