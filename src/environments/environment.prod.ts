@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://a2a3-186-151-122-189.ngrok.io/api',
-  users: 'https://a2a3-186-151-122-189.ngrok.io/api/users',
-  categories: 'https://a2a3-186-151-122-189.ngrok.io/api/categories',
-  notes: 'https://a2a3-186-151-122-189.ngrok.io/api/notes',
+  apiUrl: 'http://localhost:3000/api',
+  users: 'http://localhost:3000/api/users',
+  categories: 'http://localhost:3000/api/categories',
+  notes: 'http://localhost:3000/api/notes',
 };
