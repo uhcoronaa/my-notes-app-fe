@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SummaryRoutingModule } from './summary-routing.module';
 import { SummaryComponent } from './summary/summary.component';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { NgxJsonViewerModule } from 'ngx-json-viewer';
   imports: [
     CommonModule,
     SummaryRoutingModule,
-    NgxJsonViewerModule
+    NgxJsonViewerModule,
+    ReactiveFormsModule
   ]
 })
 export class SummaryModule { }

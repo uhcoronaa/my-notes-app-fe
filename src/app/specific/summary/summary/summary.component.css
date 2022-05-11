@@ -1,3 +1,11 @@
 ::ng-deep .ngx-json-viewer{
     width: 700px !important;
 }
+
+.label-width {
+    width: 175px;
+}
+.error-size {
+    font-size: 12px;
+    margin-left: 175px;
+}

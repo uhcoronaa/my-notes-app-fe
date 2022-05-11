@@ -28,7 +28,7 @@
             </div>
             <div class="col-6 mb-3">
                 <div class="input-group">
-                    <span class="input-group-text label-width">Username *</span>
+                    <span class="input-group-text label-width">Nombre de usuario *</span>
                     <input type="text" class="form-control" placeholder="Username" formControlName="username" [class.is-invalid]="form.get('username')?.invalid && form.get('username')?.touched">
                 </div>
                 <div *ngIf="form.get('username')?.invalid && form.get('username')?.touched" class="text-danger mt-1 error-size">

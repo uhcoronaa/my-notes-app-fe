@@ -12,7 +12,7 @@
     <div class="w-50 d-flex flex-column min-vh-100 justify-content-center align-items-center">
         <div class="card p-4 w-75">
             <div class="fs-2">
-                Login
+                Inicio de sesión
             </div>
             <div *ngIf="invalidPassword" class="text-danger error-size">
                 Contraseña invalida
@@ -25,23 +25,29 @@
                     <div class="row mb-4">
                         <div class="col-12 mb-3">
                             <div class="input-group">
-                                <span class="input-group-text lbl-width">Username *</span>
-                                <input type="text" class="form-control" placeholder="Username"
-                                    formControlName="username">
+                                <span class="input-group-text lbl-width">Nombre de usuario *</span>
+                                <input type="text" class="form-control" placeholder="Nombre de usuario"
+                                    formControlName="username" [class.is-invalid]="form.get('username')?.invalid && form.get('username')?.touched">
+                            </div>
+                            <div *ngIf="form.get('username')?.invalid && form.get('username')?.touched" class="text-danger mt-1 error-size">
+                                Por favor llene el campo requerido
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="input-group">
                                 <span class="input-group-text lbl-width">Contraseña *</span>
                                 <input type="password" class="form-control" placeholder="Contraseña"
-                                    formControlName="password">
+                                    formControlName="password" [class.is-invalid]="form.get('password')?.invalid && form.get('password')?.touched">
+                            </div>
+                            <div *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="text-danger mt-1 error-size">
+                                Por favor llene el campo requerido
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="d-flex flex-row-reverse mt-2">
-                <button type="button" class="btn btn-primary ms-auto" (click)="login()">Login</button>
+                <button type="button" class="btn btn-primary ms-auto" (click)="login()">Iniciar sesión</button>
                 <button type="button" class="btn btn-link" (click)="open(content)">¿No tienes una cuenta?</button>
             </div>
         </div>
@@ -61,26 +67,38 @@
             <div class="row">
                 <div class="col-12 mb-3">
                     <div class="input-group">
-                        <span class="input-group-text lbl-width">Username *</span>
-                        <input type="text" class="form-control" placeholder="Username" formControlName="username">
+                        <span class="input-group-text lbl-width">Nombre de usuario *</span>
+                        <input type="text" class="form-control" placeholder="Nombre de usuario" formControlName="username" [class.is-invalid]="signUpForm.get('username')?.invalid && signUpForm.get('username')?.touched">
+                    </div>
+                    <div *ngIf="signUpForm.get('username')?.invalid && signUpForm.get('username')?.touched" class="text-danger mt-1 error-size">
+                        Por favor llene el campo requerido
                     </div>
                 </div>
                 <div class="col-12 mb-3">
                     <div class="input-group">
                         <span class="input-group-text lbl-width">Nombres *</span>
-                        <input type="text" class="form-control" placeholder="Nombres" formControlName="firstName">
+                        <input type="text" class="form-control" placeholder="Nombres" formControlName="firstName" [class.is-invalid]="signUpForm.get('firstName')?.invalid && signUpForm.get('firstName')?.touched">
+                    </div>
+                    <div *ngIf="signUpForm.get('firstName')?.invalid && signUpForm.get('firstName')?.touched" class="text-danger mt-1 error-size">
+                        Por favor llene el campo requerido
                     </div>
                 </div>
                 <div class="col-12 mb-3">
                     <div class="input-group">
                         <span class="input-group-text lbl-width">Apellidos *</span>
-                        <input type="text" class="form-control" placeholder="Apellidos" formControlName="lastName">
+                        <input type="text" class="form-control" placeholder="Apellidos" formControlName="lastName" [class.is-invalid]="signUpForm.get('lastName')?.invalid && signUpForm.get('lastName')?.touched">
+                    </div>
+                    <div *ngIf="signUpForm.get('lastName')?.invalid && signUpForm.get('lastName')?.touched" class="text-danger mt-1 error-size">
+                        Por favor llene el campo requerido
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="input-group">
                         <span class="input-group-text lbl-width">Contraseña *</span>
-                        <input type="password" class="form-control" placeholder="Contraseña" formControlName="password">
+                        <input type="password" class="form-control" placeholder="Contraseña" formControlName="password" [class.is-invalid]="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched">
+                    </div>
+                    <div *ngIf="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched" class="text-danger mt-1 error-size">
+                        Por favor llene el campo requerido
                     </div>
                 </div>
             </div>

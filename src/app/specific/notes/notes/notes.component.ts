@@ -24,22 +24,7 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'LOAD_NOTES' }));
-    this.subscriptions.push(this.notesService.fetchNotes()
-      .subscribe((notes: Note[]) => {
-        this.store.dispatch(notesActions.loadNotes({ notes }));
-        const todoNotes = notes.filter((n) => n.status === 'TO_DO').length;
-        const inProgressNotes = notes.filter((n) => n.status === 'IN_PROGRESS').length;
-        const doneNotes = notes.filter((n) => n.status === 'DONE').length;
-        this.store.dispatch(sortNotesActions.updateTodoNotes({ todoNotes }));
-        this.store.dispatch(sortNotesActions.updateInProgressNotes({ inProgressNotes }));
-        this.store.dispatch(sortNotesActions.updateDoneNotes({ doneNotes }));
-        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
-        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
-      }, (error) => {
-        this.store.dispatch(notesActions.saveApiError({ error: { type: 'GET', messages: error.error.messages } }));
-        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
-        this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
-      }));
+    this.fetchNotes();
   }
 
   newNote(): void {
@@ -52,6 +37,7 @@ export class NotesComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.store.dispatch(notesActions.deleteNote({ id }));
         this.store.dispatch(loaderActions.stopLoading({ loadingName: 'DELETE_NOTE' }));
+        this.fetchNotes();
         this.toastService.show('Nota eliminada correctamente', { classname: 'bg-success text-light', delay: 3000, type: 'SUCCESS' });
       }, (error) => {
         this.store.dispatch(notesActions.saveApiError({ error: { type: 'DELETE', messages: error.error.messages } }));
@@ -68,6 +54,25 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => {
       s.unsubscribe();
     })
+  }
+
+  fetchNotes(): void {
+    this.subscriptions.push(this.notesService.fetchNotes()
+      .subscribe((notes: Note[]) => {
+        this.store.dispatch(notesActions.loadNotes({ notes }));
+        const todoNotes = notes.filter((n) => n.status === 'TO_DO').length;
+        const inProgressNotes = notes.filter((n) => n.status === 'IN_PROGRESS').length;
+        const doneNotes = notes.filter((n) => n.status === 'DONE').length;
+        this.store.dispatch(sortNotesActions.updateTodoNotes({ todoNotes }));
+        this.store.dispatch(sortNotesActions.updateInProgressNotes({ inProgressNotes }));
+        this.store.dispatch(sortNotesActions.updateDoneNotes({ doneNotes }));
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
+      }, (error) => {
+        this.store.dispatch(notesActions.saveApiError({ error: { type: 'GET', messages: error.error.messages } }));
+        this.store.dispatch(loaderActions.stopLoading({ loadingName: 'LOAD_NOTES' }));
+        this.toastService.show('Ocurrió un error al realizar tu solicitud', { classname: 'bg-danger text-light', delay: 3000, type: 'FAILURE' });
+      }));
   }
 
 }

@@ -5,8 +5,8 @@ import { formStatus, initialState, UnsavedFormState } from "./unsaved-forms.stat
 const formInitializedReducer = (state: UnsavedFormState, action: any) => {
     const newFormValue: formStatus = {
         formId: action.formId,
-        originalValue: action.value,
-        actualValue: action.value
+        originalValue: {...action.value},
+        actualValue: {...action.value}
     }
     const forms = [...state.unsavedForms, newFormValue];
     return {
