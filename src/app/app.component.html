@@ -1,18 +1,4 @@
-<div class="no-phone p-5 vh-100 bg-dark">
-    <div class="d-flex flex-column h-100 justify-content-center align-items-center">
-        <div class="d-flex flex-column align-items-center card p-4">
-            <div class="fs-1 mb-3">
-                <i class="bi bi-pc-display-horizontal"></i>
-            </div>
-            <div class="fs-6 title-color text-center">
-                Esta aplicación solo se encuentra disponible para dispositivos de escritorio
-            </div>
-        </div>
-    </div>
-</div>
-<div class="desktop-display">
-    <div class="overlay" *ngIf="overlayEnabled"></div>
-    <router-outlet></router-outlet>
-    <div class="spinner-border spinner text-primary" role="status" *ngIf="overlayEnabled"></div>
-    <my-notes-app-toasts aria-live="polite" aria-atomic="true"></my-notes-app-toasts>
-</div>
+<div class="overlay" *ngIf="overlayEnabled"></div>
+<router-outlet></router-outlet>
+<div class="spinner-border spinner text-primary" role="status" *ngIf="overlayEnabled"></div>
+<my-notes-app-toasts aria-live="polite" aria-atomic="true"></my-notes-app-toasts>

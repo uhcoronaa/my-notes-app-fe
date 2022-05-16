@@ -14,7 +14,7 @@
 
 <div class="card mb-3 p-4" *ngFor="let category of categoriesObservable | async">
     <div class="d-flex flex-row align-items-center">
-        <div class="me-5">
+        <div class="me-5 no-display">
             <img [src]="category.image" alt="" width="90" height="90" class="rounded-circle me-2" loadImgError="assets/image-error.png">
         </div>
         <div class="me-auto">
@@ -25,11 +25,11 @@
                 <b>Descripción: </b>{{category.description}}
             </div>
         </div>
-        <div>
-            <button class="btn btn-link text-decoration-none text-primary me-5" (click)="editCategory(category._id)">
+        <div class="d-flex flex-sm-row flex-column">
+            <button class="btn btn-link text-decoration-none text-primary me-5 me-i" (click)="editCategory(category._id)">
                 <i class="bi bi-pencil me-2"></i> Editar
             </button>
-            <button class="btn btn-link text-decoration-none text-danger me-4" (click)="deleteCategory(category._id)">
+            <button class="btn btn-link text-decoration-none text-danger me-4 me-i" (click)="deleteCategory(category._id)">
                 <i class="bi bi-trash me-2"></i> Eliminar
             </button>
         </div>

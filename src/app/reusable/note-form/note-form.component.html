@@ -15,7 +15,7 @@
     </div>
     <form [formGroup]="form">
         <div class="row mb-4">
-            <div class="col-6 mb-3">
+            <div class="col-sm-12 col-md-6 mb-3">
                 <div class="input-group">
                     <span class="input-group-text label-width">Nombre *</span>
                     <input type="text" class="form-control" placeholder="Nombre" formControlName="name" [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched">
@@ -24,7 +24,7 @@
                     Por favor llene el campo requerido
                 </div>
             </div>
-            <div class="col-6 mb-3">
+            <div class="col-sm-12 col-md-6  mb-3">
                 <div class="input-group">
                     <span class="input-group-text label-width">Categoría *</span>
                     <select class="form-select" aria-label="Default select example" formControlName="category" [class.is-invalid]="form.get('category')?.invalid && form.get('category')?.touched">
@@ -35,7 +35,7 @@
                     Por favor llene el campo requerido
                 </div>
             </div>
-            <div class="col-6 mb-3">
+            <div class="col-sm-12 col-md-6  mb-3">
                 <div class="input-group">
                     <span class="input-group-text label-width">Estado *</span>
                     <select class="form-select" aria-label="Default select example" formControlName="status" [class.is-invalid]="form.get('status')?.invalid && form.get('status')?.touched">

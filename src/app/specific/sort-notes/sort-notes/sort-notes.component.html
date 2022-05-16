@@ -5,7 +5,7 @@
         </div>
         <div class="custom-header-height">
             <div class="row h-100" cdkDropListGroup>
-                <div class="col-4 h-100">
+                <div class="col-sm-12 col-md-4 ch">
                     <div class="card p-3 h-100" cdkDropList [cdkDropListData]="todo" (cdkDropListDropped)="drop($event)">
                         <div class="fs-5 mb-2">
                             Por hacer
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4 h-100">
+                <div class="col-sm-12 col-md-4 ch">
                     <div class="card p-3 h-100" cdkDropList [cdkDropListData]="inProgress"
                         (cdkDropListDropped)="drop($event)">
                         <div class="fs-5 mb-2">
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4 h-100">
+                <div class="col-sm-12 col-md-4 ch">
                     <div class="card p-3 h-100" cdkDropList [cdkDropListData]="done" (cdkDropListDropped)="drop($event)">
                         <div class="fs-5 mb-2">
                             Finalizado

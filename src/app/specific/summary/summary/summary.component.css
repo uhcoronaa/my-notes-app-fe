@@ -9,3 +9,10 @@
     font-size: 12px;
     margin-left: 175px;
 }
+
+
+@media screen and (max-width: 1023px) {
+    ::ng-deep .ngx-json-viewer{
+        width: 350px !important;
+    }
+}

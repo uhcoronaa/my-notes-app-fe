@@ -33,10 +33,10 @@ div.desktop-display {
 
 @media screen and (max-width: 1023px) {
   div.no-phone {
-    display: block;
+    display: block !important;
   }
 
   div.desktop-display {
-    display: none;
+    display: none !important;
   }
 }

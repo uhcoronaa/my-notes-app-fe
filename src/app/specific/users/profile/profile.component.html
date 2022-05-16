@@ -8,7 +8,7 @@
     </div>
     <form [formGroup]="form">
         <div class="row mb-4">
-            <div class="col-6 mb-3">
+            <div class="col-sm-12 col-md-6 mb-3">
                 <div class="input-group">
                     <span class="input-group-text label-width">Nombres *</span>
                     <input type="text" class="form-control" placeholder="Nombres" formControlName="firstName" [class.is-invalid]="form.get('firstName')?.invalid && form.get('firstName')?.touched">
@@ -17,7 +17,7 @@
                     Por favor llene el campo requerido
                 </div>
             </div>
-            <div class="col-6 mb-3">
+            <div class="col-sm-12 col-md-6 mb-3">
                 <div class="input-group">
                     <span class="input-group-text label-width">Apellidos *</span>
                     <input type="text" class="form-control" placeholder="Apellidos" formControlName="lastName" [class.is-invalid]="form.get('lastName')?.invalid && form.get('lastName')?.touched">
@@ -26,7 +26,7 @@
                     Por favor llene el campo requerido
                 </div>
             </div>
-            <div class="col-6 mb-3">
+            <div class="col-sm-12 col-md-6 mb-3">
                 <div class="input-group">
                     <span class="input-group-text label-width">Nombre de usuario *</span>
                     <input type="text" class="form-control" placeholder="Username" formControlName="username" [class.is-invalid]="form.get('username')?.invalid && form.get('username')?.touched">
