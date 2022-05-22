@@ -15,16 +15,16 @@
             loadImgError="assets/image-error.png">
         </div>
         <div class="me-auto">
-            <div>
+            <div class="ellipsis">
                 <b>Nombre: </b> {{note.name}}
             </div>
-            <div>
+            <div class="ellipsis">
                 <b>Descripción: </b>{{note.description}}
             </div>
-            <div>
+            <div class="ellipsis">
                 <b>Categoría: </b>{{note.category}}
             </div>
-            <div>
+            <div class="ellipsis">
                 <b>Estado: </b>{{note.status === 'TO_DO'? 'Por hacer': note.status === 'IN_PROGRESS' ? 'En progreso' : note.status === 'DONE'? 'Terminado': '' }}
             </div>
         </div>

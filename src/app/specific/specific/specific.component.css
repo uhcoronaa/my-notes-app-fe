@@ -27,18 +27,27 @@
     text-overflow: ellipsis;
 }
 
-.mobile-screen{
-    display: none;
-}
-.desktop-screen{
-    display: block;
+.top-bar{
+    display: none !important;
 }
 
 @media screen and (max-width: 1023px) {
-    .mobile-screen{
-        display: block !important;
+    .sidenav {
+        display: none;
     }
-    .desktop-screen{
-        display: none !important;
+    .content {
+        margin-left: 0px;
     }
+    .top-bar {
+        display: inherit !important;
+    }
+  }
+
+.sidenav2 {
+    width: 270px;
+    position: fixed;
+}
+
+.pb-80{
+    padding-bottom: 70px !important;
 }

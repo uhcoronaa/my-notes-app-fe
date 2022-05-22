@@ -1,128 +1,7 @@
-<div class="vh-100 w-100 mobile-screen">
-    <div class="d-flex flex-row align-items-center bg-dark sticky-top">
-        <div class="text-light fs-1 p-2 ms-2 me-2" type="button" data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop">
-            <i class="bi bi-list"></i>
-        </div>
-        <div class="fs-4 text-light">
-            Mi app de notas
-        </div>
-    </div>
-
-    <div class="offcanvas offcanvas-start sidenav" tabindex="-1" id="offcanvasWithBackdrop"
-        aria-labelledby="offcanvasWithBackdropLabel">
-        <div class="d-flex flex-row">
-            <div class="sidenav vh-100 p-3 bg-dark text-white">
-                <div class="d-flex flex-column h-100">
-                    <div class="mb-auto">
-                        <div class="d-flex flex-row align-items-center">
-                            <div class="mr-auto">
-                                <img class="sidenav-image" src="assets/favicon-light.png">
-                            </div>
-                            <div class="fs-4">
-                                Mi app de notas
-                            </div>
-                        </div>
-                        <hr>
-                        <ul class="nav nav-pills flex-column mt-3">
-                            <li>
-                                <a [routerLink]="['notes']" [routerLinkActive]="'active'" class="nav-link text-white"
-                                    data-bs-dismiss="offcanvas" aria-label="Close">
-                                    <i class="bi bi-card-text me-2"></i>
-                                    Notas
-                                </a>
-                            </li>
-                            <li>
-                                <a [routerLink]="['categories']" [routerLinkActive]="'active'"
-                                    class="nav-link text-white" data-bs-dismiss="offcanvas" aria-label="Close">
-                                    <i class="bi bi-tag me-2"></i>
-                                    Categorías
-                                </a>
-                            </li>
-                            <li>
-                                <a [routerLink]="['sort-notes']" [routerLinkActive]="'active'"
-                                    class="nav-link text-white" data-bs-dismiss="offcanvas" aria-label="Close">
-                                    <i class="bi bi-sort-down me-2"></i>
-                                    Ordenar notas
-                                </a>
-                            </li>
-                            <li>
-                                <a [routerLink]="['summary']" [routerLinkActive]="'active'" class="nav-link text-white"
-                                    data-bs-dismiss="offcanvas" aria-label="Close">
-                                    <i class="bi bi-book me-2"></i>
-                                    Resumen de estado
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="d-flex flex-row align-items-center">
-                            <div class="me-auto">Notas por hacer</div> <span
-                                class="badge rounded-pill bg-light text-dark custom-badge">{{todoNotesObservable|async}}</span>
-                        </div>
-                        <div class="d-flex flex-row align-items-center">
-                            <div class="me-auto">Notas en progreso</div> <span
-                                class="badge rounded-pill bg-light text-dark custom-badge">{{inProgressNotesObservable|async}}</span>
-                        </div>
-                        <div class="d-flex flex-row align-items-center">
-                            <div class="me-auto">Notas terminadas</div> <span
-                                class="badge rounded-pill bg-light text-dark custom-badge">{{doneNotesObservable|async}}</span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div>
-                        <div class="dropdown">
-                            <a href="#"
-                                class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                                id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <div class="me-auto ellipsis">
-                                    <img [src]="(loggedUserObservable|async)?.image" alt="" width="32" height="32"
-                                        class="rounded-circle me-2"
-                                        loadImgError="assets/image-error.png">{{(loggedUserObservable|async)?.firstName}}
-                                    {{(loggedUserObservable|async)?.lastName}}
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small shadow"
-                                aria-labelledby="dropdownUser1">
-                                <li (click)="checkProfile()" data-bs-dismiss="offcanvas" aria-label="Close"><button
-                                        class="dropdown-item btn btn-link"><i class="bi bi-person-circle me-2"></i>Mi
-                                        perfil</button></li>
-                                <li (click)="changePassword()" data-bs-dismiss="offcanvas" aria-label="Close"><button
-                                        class="dropdown-item btn btn-link"><i class="bi bi-pencil me-2"></i>Cambiar
-                                        contraseña</button></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li (click)="logout()" data-bs-dismiss="offcanvas" aria-label="Close"><button
-                                        class="dropdown-item btn btn-link"><i
-                                            class="bi bi-box-arrow-left me-2"></i>Cerrar sesión</button></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="vh-100 w-100 p-4">
-        <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)" *ngIf="showOutlet">
-        </router-outlet>
-        <div class="d-flex flex-column h-100 justify-content-center align-items-center" *ngIf="!showOutlet">
-            <div class="d-flex flex-row align-items-center">
-                <div class="mr-auto">
-                    <img class="sidenav-image" src="favicon.ico">
-                </div>
-                <div class="fs-2 title-color">
-                    Mi app de notas
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="desktop-screen">
+<div class="offcanvas offcanvas-start sidenav2" tabindex="-1" id="offcanvasWithBackdrop"
+    aria-labelledby="offcanvasWithBackdropLabel">
     <div class="d-flex flex-row">
-        <div class="sidenav vh-100 p-3 bg-dark text-white">
+        <div class="sidenav2 vh-100 p-3 pb-80 bg-dark text-white">
             <div class="d-flex flex-column h-100">
                 <div class="mb-auto">
                     <div class="d-flex flex-row align-items-center">
@@ -136,25 +15,29 @@
                     <hr>
                     <ul class="nav nav-pills flex-column mt-3">
                         <li>
-                            <a [routerLink]="['notes']" [routerLinkActive]="'active'" class="nav-link text-white">
+                            <a [routerLink]="['notes']" [routerLinkActive]="'active'" class="nav-link text-white"
+                                data-bs-dismiss="offcanvas" aria-label="Close">
                                 <i class="bi bi-card-text me-2"></i>
                                 Notas
                             </a>
                         </li>
                         <li>
-                            <a [routerLink]="['categories']" [routerLinkActive]="'active'" class="nav-link text-white">
+                            <a [routerLink]="['categories']" [routerLinkActive]="'active'" class="nav-link text-white"
+                                data-bs-dismiss="offcanvas" aria-label="Close">
                                 <i class="bi bi-tag me-2"></i>
                                 Categorías
                             </a>
                         </li>
                         <li>
-                            <a [routerLink]="['sort-notes']" [routerLinkActive]="'active'" class="nav-link text-white">
+                            <a [routerLink]="['sort-notes']" [routerLinkActive]="'active'" class="nav-link text-white"
+                                data-bs-dismiss="offcanvas" aria-label="Close">
                                 <i class="bi bi-sort-down me-2"></i>
                                 Ordenar notas
                             </a>
                         </li>
                         <li>
-                            <a [routerLink]="['summary']" [routerLinkActive]="'active'" class="nav-link text-white">
+                            <a [routerLink]="['summary']" [routerLinkActive]="'active'" class="nav-link text-white"
+                                data-bs-dismiss="offcanvas" aria-label="Close">
                                 <i class="bi bi-book me-2"></i>
                                 Resumen de estado
                             </a>
@@ -189,30 +72,126 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small shadow"
                             aria-labelledby="dropdownUser1">
-                            <li (click)="checkProfile()"><button class="dropdown-item btn btn-link"><i
-                                        class="bi bi-person-circle me-2"></i>Mi perfil</button></li>
-                            <li (click)="changePassword()"><button class="dropdown-item btn btn-link"><i
-                                        class="bi bi-pencil me-2"></i>Cambiar contraseña</button></li>
+                            <li (click)="checkProfile()" data-bs-dismiss="offcanvas" aria-label="Close"><button
+                                    class="dropdown-item btn btn-link"><i class="bi bi-person-circle me-2"></i>Mi
+                                    perfil</button></li>
+                            <li (click)="changePassword()" data-bs-dismiss="offcanvas" aria-label="Close"><button
+                                    class="dropdown-item btn btn-link"><i class="bi bi-pencil me-2"></i>Cambiar
+                                    contraseña</button></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li (click)="logout()"><button class="dropdown-item btn btn-link"><i
-                                        class="bi bi-box-arrow-left me-2"></i>Cerrar sesión</button></li>
+                            <li (click)="logout()" data-bs-dismiss="offcanvas" aria-label="Close"><button
+                                    class="dropdown-item btn btn-link"><i class="bi bi-box-arrow-left me-2"></i>Cerrar
+                                    sesión</button></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="vh-100 w-100 p-4 content">
-            <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
-            <div class="d-flex flex-column h-100 justify-content-center align-items-center" *ngIf="!showOutlet">
+    </div>
+</div>
+<div class="d-flex flex-sm-row flex-column">
+    <div class="sidenav vh-100 p-3 bg-dark text-white">
+        <div class="d-flex flex-column h-100">
+            <div class="mb-auto">
                 <div class="d-flex flex-row align-items-center">
                     <div class="mr-auto">
-                        <img class="sidenav-image" src="favicon.ico">
+                        <img class="sidenav-image" src="assets/favicon-light.png">
                     </div>
-                    <div class="fs-2 title-color">
+                    <div class="fs-4">
                         Mi app de notas
                     </div>
+                </div>
+                <hr>
+                <ul class="nav nav-pills flex-column mt-3">
+                    <li>
+                        <a [routerLink]="['notes']" [routerLinkActive]="'active'" class="nav-link text-white">
+                            <i class="bi bi-card-text me-2"></i>
+                            Notas
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['categories']" [routerLinkActive]="'active'" class="nav-link text-white">
+                            <i class="bi bi-tag me-2"></i>
+                            Categorías
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['sort-notes']" [routerLinkActive]="'active'" class="nav-link text-white">
+                            <i class="bi bi-sort-down me-2"></i>
+                            Ordenar notas
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['summary']" [routerLinkActive]="'active'" class="nav-link text-white">
+                            <i class="bi bi-book me-2"></i>
+                            Resumen de estado
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <div class="d-flex flex-row align-items-center">
+                    <div class="me-auto">Notas por hacer</div> <span
+                        class="badge rounded-pill bg-light text-dark custom-badge">{{todoNotesObservable|async}}</span>
+                </div>
+                <div class="d-flex flex-row align-items-center">
+                    <div class="me-auto">Notas en progreso</div> <span
+                        class="badge rounded-pill bg-light text-dark custom-badge">{{inProgressNotesObservable|async}}</span>
+                </div>
+                <div class="d-flex flex-row align-items-center">
+                    <div class="me-auto">Notas terminadas</div> <span
+                        class="badge rounded-pill bg-light text-dark custom-badge">{{doneNotesObservable|async}}</span>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="me-auto ellipsis">
+                            <img [src]="(loggedUserObservable|async)?.image" alt="" width="32" height="32"
+                                class="rounded-circle me-2"
+                                loadImgError="assets/image-error.png">{{(loggedUserObservable|async)?.firstName}}
+                            {{(loggedUserObservable|async)?.lastName}}
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small shadow"
+                        aria-labelledby="dropdownUser1">
+                        <li (click)="checkProfile()"><button class="dropdown-item btn btn-link"><i
+                                    class="bi bi-person-circle me-2"></i>Mi perfil</button></li>
+                        <li (click)="changePassword()"><button class="dropdown-item btn btn-link"><i
+                                    class="bi bi-pencil me-2"></i>Cambiar contraseña</button></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li (click)="logout()"><button class="dropdown-item btn btn-link"><i
+                                    class="bi bi-box-arrow-left me-2"></i>Cerrar sesión</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row align-items-center bg-dark sticky-top top-bar">
+        <div class="text-light fs-1 p-2 ms-2 me-2" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop">
+            <i class="bi bi-list"></i>
+        </div>
+        <div class="fs-4 text-light">
+            Mi app de notas
+        </div>
+    </div>
+    <div class="vh-100 w-100 p-4 content">
+        <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
+        <div class="d-flex flex-column h-100 justify-content-center align-items-center" *ngIf="!showOutlet">
+            <div class="d-flex flex-row align-items-center">
+                <div class="mr-auto">
+                    <img class="sidenav-image" src="favicon.ico">
+                </div>
+                <div class="fs-2 title-color">
+                    Mi app de notas
                 </div>
             </div>
         </div>

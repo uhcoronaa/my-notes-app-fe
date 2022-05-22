@@ -10,21 +10,21 @@
                         <div class="fs-5 mb-2">
                             Por hacer
                         </div>
-                        <div class="overflow-auto rounded">
+                        <div class="overflow-auto rounded pe-3">
                             <div class="card p-2 move-cursor mb-2" *ngFor="let item of todo" cdkDrag>
                                 <div class="d-flex flex-row align-items-center">
                                     <div>
-                                        <img class="note-img me-3" [src]="item.image" loadImgError="assets/image-error.png">
+                                        <img class="note-img me-3 image-display" [src]="item.image" loadImgError="assets/image-error.png">
                                     </div>
                                     <div class="flex-fill">
-                                        <div>
+                                        <div class="ellipsis">
                                             {{item.description}}
                                         </div>
                                         <hr class="mt-1 mb-1">
-                                        <div>
+                                        <div class="ellipsis">
                                             <span><strong>Nombre: </strong></span>{{item.name}}
                                         </div>
-                                        <div>
+                                        <div class="ellipsis">
                                             <span><strong>Categoría: </strong></span>{{item.category}}
                                         </div>
                                     </div>
@@ -39,21 +39,21 @@
                         <div class="fs-5 mb-2">
                             En progreso
                         </div>
-                        <div class="overflow-auto rounded">
+                        <div class="overflow-auto rounded pe-3">
                             <div class="card p-2 move-cursor mb-2" *ngFor="let item of inProgress" cdkDrag>
                                 <div class="d-flex flex-row align-items-center">
                                     <div>
-                                        <img class="note-img me-3" [src]="item.image" loadImgError="assets/image-error.png">
+                                        <img class="note-img me-3  image-display" [src]="item.image" loadImgError="assets/image-error.png">
                                     </div>
                                     <div class="flex-fill">
-                                        <div>
+                                        <div class="ellipsis">
                                             {{item.description}}
                                         </div>
                                         <hr class="mt-1 mb-1">
-                                        <div>
+                                        <div class="ellipsis">
                                             <span><strong>Nombre: </strong></span>{{item.name}}
                                         </div>
-                                        <div>
+                                        <div class="ellipsis">
                                             <span><strong>Categoría: </strong></span>{{item.category}}
                                         </div>
                                     </div>
@@ -67,21 +67,21 @@
                         <div class="fs-5 mb-2">
                             Finalizado
                         </div>
-                        <div class="overflow-auto rounded">
+                        <div class="overflow-auto rounded pe-3">
                             <div class="card p-2 move-cursor mb-2" *ngFor="let item of done" cdkDrag>
                                 <div class="d-flex flex-row align-items-center">
                                     <div>
-                                        <img class="note-img me-3" [src]="item.image" loadImgError="assets/image-error.png">
+                                        <img class="note-img me-3  image-display" [src]="item.image" loadImgError="assets/image-error.png">
                                     </div>
                                     <div class="flex-fill">
-                                        <div>
+                                        <div class="ellipsis">
                                             {{item.description}}
                                         </div>
                                         <hr class="mt-1 mb-1">
-                                        <div>
+                                        <div class="ellipsis">
                                             <span><strong>Nombre: </strong></span>{{item.name}}
                                         </div>
-                                        <div>
+                                        <div class="ellipsis">
                                             <span><strong>Categoría: </strong></span>{{item.category}}
                                         </div>
                                     </div>

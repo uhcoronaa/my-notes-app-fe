@@ -13,6 +13,6 @@
 
 @media screen and (max-width: 1023px) {
     ::ng-deep .ngx-json-viewer{
-        width: 350px !important;
+        width: 320px !important;
     }
 }
