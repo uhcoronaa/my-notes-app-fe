@@ -7,12 +7,13 @@ import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { userReducer } from './users/state/users.reducer';
+import { userReducer } from './modules/users/state/users.reducer';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { loaderReducer } from './specific/loader/loader.reducer';
-import { ReusableModule } from './reusable/reusable.module';
+import { loaderReducer } from './modules/specific/loader/loader.reducer';
+import { ReusableModule } from './modules/reusable/reusable.module';
 import { RefreshTokenInterceptor } from './interceptors/refresh-token.interceptor';
+import { AppReducer } from './state/app-reducers';
 
 @NgModule({
   declarations: [
@@ -21,14 +22,12 @@ import { RefreshTokenInterceptor } from './interceptors/refresh-token.intercepto
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(AppReducer),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
       autoPause: true
     }),
-    StoreModule.forFeature('user', userReducer),
-    StoreModule.forFeature('loader', loaderReducer),
     HttpClientModule,
     NgbModule,
     ReusableModule

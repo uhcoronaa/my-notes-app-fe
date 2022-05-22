@@ -6,14 +6,15 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { concatMap, Observable, take } from 'rxjs';
-import * as userSelectors from '../users/state/users.selectors';
+import * as userSelectors from '../modules/users/state/users.selectors';
 import { Store } from '@ngrx/store';
 import { environment } from 'src/environments/environment';
+import { AppState } from '../state/app-state';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
-  constructor(private store: Store) { }
+  constructor(private store: Store<AppState>) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 

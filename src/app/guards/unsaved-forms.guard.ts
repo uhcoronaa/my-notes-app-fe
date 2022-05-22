@@ -3,15 +3,16 @@ import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } fro
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { concatMap, from, map, Observable, of } from 'rxjs';
-import { UnsavedFormConfirmationComponent } from '../reusable/unsaved-form-confirmation/unsaved-form-confirmation.component';
-import * as unsavedFormsSelectors from '../specific/unsaved-forms/unsaved-forms.selectors';
+import { UnsavedFormConfirmationComponent } from '../modules/reusable/unsaved-form-confirmation/unsaved-form-confirmation.component';
+import * as unsavedFormsSelectors from '../modules/specific/unsaved-forms/unsaved-forms.selectors';
+import { AppState } from '../state/app-state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UnsavedFormsGuard implements CanActivate {
 
-  constructor(private store: Store, private modalService: NgbModal) { }
+  constructor(private store: Store<AppState>, private modalService: NgbModal) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,

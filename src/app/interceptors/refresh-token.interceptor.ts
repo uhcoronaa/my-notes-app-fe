@@ -8,13 +8,14 @@ import {
 import { catchError, concatMap, Observable, switchMap, take, throwError } from 'rxjs';
 import { UsersService } from '../services/users.service';
 import { Store } from '@ngrx/store';
-import * as userSelectors from '../users/state/users.selectors';
-import * as userActions from '../users/state/users.actions';
+import * as userSelectors from '../modules/users/state/users.selectors';
+import * as userActions from '../modules/users/state/users.actions';
+import { AppState } from '../state/app-state';
 
 @Injectable()
 export class RefreshTokenInterceptor implements HttpInterceptor {
 
-  constructor(private authService: UsersService, private store: Store) { }
+  constructor(private authService: UsersService, private store: Store<AppState>) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(

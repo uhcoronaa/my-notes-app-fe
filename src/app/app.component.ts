@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UsersService } from './services/users.service';
-import * as userActions from './users/state/users.actions';
-import * as loaderSelectors from './specific/loader/loader.selectors';
+import * as userActions from './modules/users/state/users.actions';
+import * as loaderSelectors from './modules/specific/loader/loader.selectors';
 import { Subscription } from 'rxjs';
+import { AppState } from './state/app-state';
 
 @Component({
   selector: 'my-notes-app-root',
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   overlayEnabled: boolean = false;
   loadersObservable = this.store.select(loaderSelectors.loadings);
 
-  constructor(private store: Store, private userService: UsersService) { }
+  constructor(private store: Store<AppState>, private userService: UsersService) { }
 
   ngOnInit(): void {
     const userCredentials = this.userService.getUserCredentials();
