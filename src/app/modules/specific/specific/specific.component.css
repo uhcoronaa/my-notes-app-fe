@@ -1,0 +1,53 @@
+.sidenav {
+    width: 270px;
+    position: fixed;
+}
+
+.sidenav-image {
+    width: 50px;
+    height: 50px;
+}
+
+.content {
+    margin-left: 270px;
+}
+
+.custom-badge {
+    width: 32px;
+}
+
+.title-color {
+    color: #333333;
+}
+
+.ellipsis {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.top-bar{
+    display: none !important;
+}
+
+@media screen and (max-width: 1023px) {
+    .sidenav {
+        display: none;
+    }
+    .content {
+        margin-left: 0px;
+    }
+    .top-bar {
+        display: inherit !important;
+    }
+  }
+
+.sidenav2 {
+    width: 270px;
+    position: fixed;
+}
+
+.pb-80{
+    padding-bottom: 70px !important;
+}

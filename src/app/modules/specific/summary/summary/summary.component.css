@@ -1,0 +1,18 @@
+::ng-deep .ngx-json-viewer{
+    width: 700px !important;
+}
+
+.label-width {
+    width: 175px;
+}
+.error-size {
+    font-size: 12px;
+    margin-left: 175px;
+}
+
+
+@media screen and (max-width: 1023px) {
+    ::ng-deep .ngx-json-viewer{
+        width: 320px !important;
+    }
+}

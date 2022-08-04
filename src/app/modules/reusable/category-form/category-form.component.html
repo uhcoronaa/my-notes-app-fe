@@ -1,0 +1,53 @@
+<div class="fs-2 mb-4" *ngIf="formType==='create'">
+    Nueva categoría
+</div>
+
+<div class="fs-2 mb-4" *ngIf="formType==='edit'">
+    Editar categoría
+</div>
+
+<div class="card p-4">
+    <div *ngIf="duplicatedCategory" class="text-danger error-size2 mb-2">
+        La categoría ya existe
+    </div>
+    <form [formGroup]="form">
+        <div class="row mb-4">
+            <div class="col-12 mb-3">
+                <div class="input-group">
+                    <span class="input-group-text label-width">Nombre *</span>
+                    <input type="text" class="form-control" placeholder="Nombre" formControlName="name" [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched">
+                </div>
+                <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="text-danger mt-1 error-size">
+                    Por favor llene el campo requerido
+                </div>
+            </div>
+            <div class="col-12 mb-3">
+                <div class="input-group">
+                    <span class="input-group-text label-width">Descripción *</span>
+                    <input type="text" class="form-control" placeholder="Descripción" formControlName="description" [class.is-invalid]="form.get('description')?.invalid && form.get('description')?.touched">
+                </div>
+                <div *ngIf="form.get('description')?.invalid && form.get('description')?.touched" class="text-danger mt-1 error-size">
+                    Por favor llene el campo requerido
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="me-3">
+                        <img [src]="this.form.get('image')?.value" width="90" height="90" loadImgError="assets/image-error.png" class="rounded-circle me-2">
+                    </div>
+                    <div class="flex-fill">
+                        <div>
+                            <label for="formFile" class="form-label me-4">Imagen</label>
+                        </div>
+                        <input class="form-control" type="file" id="formFile" (change)="handleImageChange($event)" accept="image/*">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="d-flex flex-row-reverse mt-4">
+    <button type="button" class="btn btn-primary ms-3" (click)="save()">Guardar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="cancel()">Cancelar</button>
+</div>

@@ -1,0 +1,77 @@
+<div class="row mt-3">
+    <div class="col-sm-12 col-md-6">
+        <div class="fs-2 mb-4">
+            Cambios en formulario
+        </div>
+        <form class="mb-3" [formGroup]="changesForm">
+            <div class="input-group">
+                <span class="input-group-text label-width">Título *</span>
+                <input type="text" class="form-control" placeholder="Título" formControlName="title" [class.is-invalid]="changesForm.get('title')?.invalid && changesForm.get('title')?.touched">
+            </div>
+            <div *ngIf="changesForm.get('title')?.invalid && changesForm.get('title')?.touched" class="text-danger mt-1 error-size">
+                Por favor llene el campo requerido
+            </div>
+            <div class="input-group mt-3">
+                <span class="input-group-text label-width">Mensaje *</span>
+                <input type="text" class="form-control" placeholder="Mensaje" formControlName="message" [class.is-invalid]="changesForm.get('message')?.invalid && changesForm.get('message')?.touched">
+            </div>
+            <div *ngIf="changesForm.get('message')?.invalid && changesForm.get('message')?.touched" class="text-danger mt-1 error-size">
+                Por favor llene el campo requerido
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <div class="fs-2 mb-4">
+            Pantalla de carga
+        </div>
+        <form class="mb-3" [formGroup]="loadForm">
+            <div class="input-group">
+                <span class="input-group-text label-width">Duración de carga *</span>
+                <input type="number" class="form-control" placeholder="Duración de carga (segundos)" formControlName="time" [class.is-invalid]="loadForm.get('time')?.invalid && loadForm.get('time')?.touched">
+            </div>
+            <div *ngIf="loadForm.get('time')?.invalid && loadForm.get('time')?.touched" class="text-danger mt-1 error-size">
+                Por favor llene el campo requerido
+            </div>
+        </form>
+        <div class="d-flex flex-row-reverse">
+            <button type="button" class="btn btn-primary" (click)="loadTest()">Iniciar carga</button>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 mt-3">
+        <div class="fs-2 mb-4">
+            Generación de errores
+        </div>
+        <form class="mb-3" [formGroup]="errorForm">
+            <div class="input-group">
+                <span class="input-group-text label-width">Tipo *</span>
+                <select class="form-select" aria-label="Default select example" formControlName="type" [class.is-invalid]="errorForm.get('type')?.invalid && errorForm.get('type')?.touched">
+                    <option value="POST">POST</option>
+                    <option value="GET">GET</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="DELETE">DELETE</option>
+                  </select>
+            </div>
+            <div *ngIf="errorForm.get('type')?.invalid && errorForm.get('type')?.touched" class="text-danger mt-1 error-size">
+                Por favor llene el campo requerido
+            </div>
+            <div class="input-group mt-3">
+                <span class="input-group-text label-width">Mensaje *</span>
+                <input type="text" class="form-control" placeholder="Mensaje" formControlName="message" [class.is-invalid]="errorForm.get('message')?.invalid && errorForm.get('message')?.touched">
+            </div>
+            <div *ngIf="errorForm.get('message')?.invalid && errorForm.get('message')?.touched" class="text-danger mt-1 error-size">
+                Por favor llene el campo requerido
+            </div>
+        </form>
+        <div class="d-flex flex-row-reverse">
+            <button type="button" class="btn btn-danger" (click)="generateError()">Generar error</button>
+            <button type="button" class="btn btn-outline-secondary me-2" (click)="cleanErrors()">Descartar errores</button>
+        </div>
+    </div>
+</div>
+
+<div class="w-100 mt-4">
+    <div class="fs-2 mb-4">
+        Resumen de estado
+    </div>
+    <ngx-json-viewer *ngIf="state" [json]="state" [expanded]="true"></ngx-json-viewer>
+</div>

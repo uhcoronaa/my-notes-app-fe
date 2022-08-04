@@ -1,1 +1,4 @@
-app-component-works!!!
+<div class="overlay" *ngIf="overlayEnabled"></div>
+<router-outlet></router-outlet>
+<div class="spinner-border spinner text-primary" role="status" *ngIf="overlayEnabled"></div>
+<my-notes-app-toasts aria-live="polite" aria-atomic="true"></my-notes-app-toasts>

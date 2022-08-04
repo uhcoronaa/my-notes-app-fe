@@ -1,0 +1,35 @@
+.lbl-width{
+    width: 175px;
+}
+
+.error-size {
+    font-size: 12px;
+    margin-left: 175px;
+}
+
+.min-vh-75{
+    height: 80vh;
+}
+
+@media screen and (max-width: 1023px) {
+    .lbl-width {
+        font-size: 13px !important;
+        width: 140px !important;
+    }
+}
+
+.mobile-screen{
+    display: none !important;
+}
+.desktop-screen{
+    display: block;
+}
+
+@media screen and (max-width: 1023px) {
+    .mobile-screen{
+        display: block !important;
+    }
+    .desktop-screen{
+        display: none  !important;
+    }
+}

@@ -1,0 +1,17 @@
+.label-width {
+    width: 175px;
+}
+.error-size {
+    font-size: 12px;
+    margin-left: 175px;
+}
+.error-size2 {
+    font-size: 12px;
+}
+
+@media screen and (max-width: 1023px) {
+    .label-width {
+        font-size: 12px !important;
+        width: 130px !important;
+    }
+}
