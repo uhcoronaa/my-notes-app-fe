@@ -8,7 +8,6 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import * as loaderActions from '../../specific/loader/loader.actions';
 import { ToastService } from 'src/app/services/toast.service';
-import { encrypt } from 'src/assets/cipher';
 import * as userSelector from '../state/users.selectors';
 import { AppState } from 'src/app/state/app-state';
 
@@ -61,8 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'START_LOGIN' }));
     this.store.dispatch(userActions.resetApiErrors());
     const userBody = {
-      ...this.form.value,
-      password: encrypt(this.form.get('password')?.value)
+      ...this.form.value
     }
     this.subscriptions.push(this.userService.login(userBody).subscribe((response) => {
       this.store.dispatch(userActions.accessTokenUpdated({ accessToken: response.accessToken }));
@@ -92,8 +90,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.signUpForm.markAllAsTouched();
     if (this.signUpForm.invalid) return;
     const userBody = {
-      ...this.signUpForm.value,
-      password: encrypt(this.signUpForm.get('password')?.value)
+      ...this.signUpForm.value
     }
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'START_SIGNUP' }));
     this.store.dispatch(userActions.resetApiErrors());

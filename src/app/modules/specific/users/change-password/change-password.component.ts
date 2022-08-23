@@ -8,7 +8,6 @@ import * as userActions from '../../../users/state/users.actions';
 import * as loaderActions from '../../loader/loader.actions';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
-import { encrypt } from 'src/assets/cipher';
 import * as unsavedFormActions from '../../unsaved-forms/unsaved-forms.actions';
 import { AppState } from 'src/app/state/app-state';
 
@@ -53,7 +52,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       return;
     }
     this.store.dispatch(loaderActions.startLoading({ loadingName: 'UPDATE_USER' }));
-    this.subcriptions.push(this.userService.changePassword(encrypt(this.form?.get('password')?.value), this._id).subscribe((response) => {
+    this.subcriptions.push(this.userService.changePassword(this.form?.get('password')?.value, this._id).subscribe((response) => {
       this.store.dispatch(userActions.accessTokenUpdated({ accessToken: response.accessToken }));
       this.store.dispatch(userActions.refreshTokenUpdated({ refreshToken: response.refreshToken }));
       this.store.dispatch(userActions.loggedUserUpdated({ loggedUser: response.user }));
